@@ -10,6 +10,12 @@
 
 namespace RED4ext
 {
+
+class RenderProxyInitInfo
+{
+};
+
+
 struct RenderProxyInstanceMatrix
 {
     struct Row

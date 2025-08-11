@@ -1,8 +1,13 @@
 #pragma once
 
+#include <RED4ext/Detail/Memory.hpp>
+
+namespace RED4ext
+{
+
 struct IRenderData
 {
-	using AllocatorType = Memory::RenderDataAllocator;
+    using AllocatorType = Memory::RenderDataAllocator;
 
     virtual Memory::IAllocator* GetAllocator()
     {
@@ -39,67 +44,75 @@ struct TRenderPtr
 {
     TRenderPtr() = default;
 
-    ~TRenderPtr()
+    ~TRenderPtr() noexcept
     {
         Release();
     }
 
-    TRenderPtr(const TRenderPtr& aOther)
-        : data(aOther.data)
+    TRenderPtr(std::nullptr_t) noexcept
     {
-        if (data)
-            data->AddRef();
     }
 
-    TRenderPtr& operator=(const TRenderPtr& aOther)
+    template<std::derived_from<IRenderData> U>
+    explicit TRenderPtr(U* aPointer) noexcept
+        : m_instance(aPointer)
     {
-        if (this != &aOther)
-        {
-            Release();
+    }
 
-            data = aOther.data;
-            if (data)
-                data->AddRef();
-        }
-        return *this;
+    TRenderPtr(const TRenderPtr& aOther) noexcept
+        : m_instance(aOther.m_instance)
+    {
+        if (m_instance)
+            m_instance->AddRef();
     }
 
     TRenderPtr(TRenderPtr&& aOther) noexcept
-        : data(aOther.data)
     {
-        aOther.data = nullptr;
+        Swap(aOther);
     }
 
-    TRenderPtr& operator=(TRenderPtr&& aOther) noexcept
+    explicit operator bool() const noexcept
     {
-        if (this != &aOther)
-        {
-            Release();
+        return m_instance != nullptr;
+    }
 
-            data = aOther.data;
-            aOther.data = nullptr;
-        }
+    TRenderPtr& operator=(const TRenderPtr& aRhs) noexcept
+    {
+        TRenderPtr(aRhs).Swap(*this);
         return *this;
     }
 
-    T* operator->() const
+    TRenderPtr& operator=(TRenderPtr&& aRhs) noexcept
     {
-        return data;
+        Swap(aRhs);
+        return *this;
     }
 
-    // swap?
-
-    void Release()
+    T* operator->() const noexcept
     {
-        if (data)
-            data->Release();
+        return m_instance;
     }
 
-    T* GetPtr() const
+    void Swap(TRenderPtr& aOther) noexcept
     {
-        return data;
+        std::swap(m_instance, aOther.m_instance);
     }
 
-    T* data = nullptr;
+    T* GetPtr() const noexcept
+    {
+        return m_instance;
+    }
+
+private:
+
+    void Release() noexcept
+    {
+        if (m_instance)
+            m_instance->Release();
+    }
+
+    T* m_instance = nullptr;
 };
 RED4EXT_ASSERT_SIZE(TRenderPtr<>, 0x08);
+
+} // namespace RED4ext
