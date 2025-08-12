@@ -4,7 +4,6 @@
 
 namespace RED4ext
 {
-
 class IRenderSkinningData : IRenderData
 {
 };

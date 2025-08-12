@@ -46,6 +46,7 @@ RED4EXT_ASSERT_OFFSET(CRenderMesh, vertexBufferID, 0x30);
 RED4EXT_ASSERT_OFFSET(CRenderMesh, indexBufferID, 0x34);
 RED4EXT_ASSERT_OFFSET(CRenderMesh, chunks, 0xA0);
 
+
 struct CRenderMorphTargets : IRenderResource
 {
     using AllocatorType = Memory::RenderMeshAllocator;
@@ -55,6 +56,7 @@ struct CRenderMorphTargets : IRenderResource
     uint8_t unk08[0x28 - 0x18]; // 08
 };
 RED4EXT_ASSERT_SIZE(CRenderMorphTargets, 0x28);
+
 
 struct CRenderMorphTargetMesh : CRenderMesh
 {
@@ -73,11 +75,13 @@ struct CRenderMaterialSetup : IRenderResource
 };
 RED4EXT_ASSERT_SIZE(CRenderMaterialSetup, 0x48);
 
+
 struct CRenderMaterialParameters : IRenderResource
 {
     uint8_t unk10[0x128 - 0x10];
 };
 RED4EXT_ASSERT_SIZE(CRenderMaterialParameters, 0x128);
+
 
 struct CRenderMaterial : CRenderMaterialParameters
 {
@@ -90,18 +94,22 @@ struct CRenderHairProfile : IRenderResource
 {
     uint8_t unk10[0x40 - 0x10];
 };
+RED4EXT_ASSERT_SIZE(CRenderHairProfile, 0x40);
 
 struct RenderEmitterDrawerData
 {
 };
 
+
 struct SDynamicDecalInitInfo
 {
 };
 
+
 struct DynamicTextureDesc
 {
 };
+
 
 struct DynamicVolumeTextureDesc
 {

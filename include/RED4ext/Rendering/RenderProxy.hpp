@@ -1,16 +1,16 @@
 #pragma once
 
-#include <RED4ext/Common.hpp>
-#include <RED4ext/Rendering/RenderResource.hpp>
-#include <RED4ext/Scripting/Natives/Generated/IRenderProxyCustomData.hpp>
-#include <RED4ext/Scripting/Natives/Generated/WorldTransform.hpp>
-#include <RED4ext/Rendering/RenderScene.hpp>
-
 #include <cstdint>
+
+#include <RED4ext/Common.hpp>
+#include <RED4ext/Rendering/RenderScene.hpp>
+#include <RED4ext/Rendering/RenderResource.hpp>
+#include <RED4ext/Scripting/Natives/Generated/WorldTransform.hpp>
+#include <RED4ext/Scripting/Natives/Generated/IRenderProxyCustomData.hpp>
+
 
 namespace RED4ext
 {
-
 class RenderProxyInitInfo
 {
 };
@@ -26,6 +26,7 @@ struct RenderProxyInstanceMatrix
     Row rows[3];
 };
 RED4EXT_ASSERT_SIZE(RenderProxyInstanceMatrix, 0x30);
+
 
 struct IRenderProxy : IRenderData
 {
@@ -58,13 +59,53 @@ struct IRenderProxy : IRenderData
     virtual uint8_t sub_E0();                // E0
     virtual void sub_E8();                   // E8
     virtual void sub_F0();                   // F0
-
-    uint64_t unk10;
-    RenderProxyInstanceMatrix instanceMatrix;
-    IRenderProxyCustomData* customData; // 48
-    uint8_t unk50[0x98 - 0x50];         // 50
 };
-RED4EXT_ASSERT_SIZE(IRenderProxy, 0x98);
-RED4EXT_ASSERT_OFFSET(IRenderProxy, customData, 0x48);
+
+
+struct IRenderProxyBase : IRenderProxy
+{
+    uint64_t unk10;                           // 10
+    RenderProxyInstanceMatrix instanceMatrix; // 18
+    IRenderProxyCustomData* customData;       // 48
+    uint8_t unk50[0x98 - 0x50];               // 50
+};
+RED4EXT_ASSERT_SIZE(IRenderProxyBase, 0x98);
+RED4EXT_ASSERT_OFFSET(IRenderProxyBase, customData, 0x48);
+
+
+struct IRenderProxyCollectable : IRenderProxyBase
+{
+    virtual void sub_F8() = 0; // F8
+};
+
+
+struct IRenderProxyDrawable : IRenderProxyCollectable
+{
+    uint8_t unk98[0xb8 - 0x98]; // 98
+};
+RED4EXT_ASSERT_SIZE(IRenderProxyDrawable, 0xb8);
+
+
+struct CRenderProxy_Mesh : IRenderProxyDrawable
+{
+    uint8_t unkB8[0xd8 - 0xb8];  // B8
+    CRenderMesh* renderMesh;     // D8
+    uint8_t unkE0[0x1c0 - 0xe0]; // E0
+};
+RED4EXT_ASSERT_SIZE(CRenderProxy_Mesh, 0x1c0);
+RED4EXT_ASSERT_OFFSET(CRenderProxy_Mesh, renderMesh, 0xD8);
+
+
+struct RenderProxyHandle
+{
+    virtual ~RenderProxyHandle() = default; // 00
+
+    TRenderPtr<IRenderScene> renderScene; // 08
+    TRenderPtr<IRenderProxy> renderProxy; // 10
+    uint8_t unk18[0x28 - 0x18]; // 18
+};
+RED4EXT_ASSERT_SIZE(RenderProxyHandle, 0x28);
+RED4EXT_ASSERT_OFFSET(RenderProxyHandle, renderScene, 0x08);
+RED4EXT_ASSERT_OFFSET(RenderProxyHandle, renderProxy, 0x10);
 
 } // namespace RED4ext

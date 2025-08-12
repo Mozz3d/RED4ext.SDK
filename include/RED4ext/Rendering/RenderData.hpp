@@ -4,7 +4,6 @@
 
 namespace RED4ext
 {
-
 struct IRenderData
 {
     using AllocatorType = Memory::RenderDataAllocator;

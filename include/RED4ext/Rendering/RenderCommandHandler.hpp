@@ -1,5 +1,7 @@
 #pragma once
 
+namespace RED4ext
+{
 struct IRenderCommandHandler
 {
 	virtual ~IRenderCommandHandler() = default;													                   // 00
@@ -115,3 +117,5 @@ struct CRenderCommandHandler : IRenderCommandHandler
 	uint8_t unk08[0xcb8 - 0x08]; // 08
 };
 RED4EXT_ASSERT_SIZE(CRenderCommandHandler, 0xcb8);
+
+} // namespace RED4ext

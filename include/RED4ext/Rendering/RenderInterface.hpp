@@ -1,5 +1,6 @@
 #pragma once
 
+#include <RED4ext/Memory/UniquePtr.hpp>
 #include <RED4ext/Rendering/RenderResource.hpp>
 #include <RED4ext/Rendering/RenderProxy.hpp>
 #include <RED4ext/Rendering/RenderSkinning.hpp>
@@ -14,7 +15,8 @@
 #include <RED4ext/Scripting/Natives/Generated/IRenderResourceBlob.hpp>
 #include <RED4ext/Scripting/Natives/Generated/STextureGroupSetup.hpp>
 
-
+namespace RED4ext
+{
 struct SurfaceCache
 {
 	using AllocatorType = Memory::SurfaceCacheAllocator;
@@ -206,3 +208,5 @@ RED4EXT_INLINE CRenderInterface* GetRenderer()
 	static const UniversalRelocPtr<CRenderInterface*> renderInterface(1931610229);
 	return renderInterface;
 }
+
+} // namespace RED4ext

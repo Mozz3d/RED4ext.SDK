@@ -3,7 +3,7 @@
 #include <RED4ext/CName.hpp>
 #include <RED4ext/Common.hpp>
 #include <RED4ext/NativeTypes.hpp>
-#include <RED4ext/RenderProxy.hpp>
+#include <RED4ext/Rendering/RenderProxy.hpp>
 #include <RED4ext/Scripting/Natives/Generated/CMesh.hpp>
 #include <RED4ext/Scripting/Natives/Generated/NavGenNavigationSetting.hpp>
 #include <RED4ext/Scripting/Natives/Generated/ent/ForcedLodDistance.hpp>
@@ -22,7 +22,7 @@ struct __declspec(align(0x10)) SkinnedMeshComponent : ent::ISkinTargetComponent
     static constexpr const char* NAME = "entSkinnedMeshComponent";
     static constexpr const char* ALIAS = NAME;
 
-    SharedPtr<IRenderProxy> renderProxy;           // 1E0
+    SharedPtr<RenderProxyHandle> renderProxy;      // 1E0
     Handle<mesh::MeshAppearance> appearanceHandle; // 1F0
     Handle<CMesh> meshHandle;                      // 200
     uint8_t unk1F0[0x228 - 0x210];                 // 210
