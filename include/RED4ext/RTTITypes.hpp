@@ -21,7 +21,7 @@ struct CClassStaticFunction;
 struct Variant;
 
 using CBaseRTTIType [[deprecated("Use 'rtti::IType' instead.")]] = rtti::IType;
-using CClass = [[deprecated("Use 'rtti::ClassType' instead.")]] = rtti::IType;
+using CClass = [[deprecated("Use 'rtti::ClassType' instead.")]] = rtti::ClassType;
 
 template<typename T>
 struct TTypedClass : CClass
