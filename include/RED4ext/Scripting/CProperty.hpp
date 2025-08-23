@@ -5,5 +5,7 @@
 
 namespace RED4ext
 {
-using CProperty = [[deprecated("Use 'rtti::Property' instead.")]] = rtti::Property;
+struct [[deprecated("Use 'rtti::Property' instead.")]] CProperty : rtti::Property
+{
+};
 } // namespace RED4ext
