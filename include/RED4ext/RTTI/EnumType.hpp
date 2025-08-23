@@ -13,9 +13,9 @@ struct EnumType : IType
         uint8_t isScripted : 1; // 00
         uint8_t b2 : 7;
     };
-    RED4EXT_ASSERT_SIZE(CEnum::Flags, 0x01);
+    RED4EXT_ASSERT_SIZE(EnumType::Flags, 0x01);
 
-    CEnum(CName aName, int8_t aActualSize, Flags aFlags = {});
+    EnumType(CName aName, int8_t aActualSize, Flags aFlags = {});
 
     virtual CName GetName() const final;                                                                     // 08
     virtual uint32_t GetSize() const final;                                                                  // 10
