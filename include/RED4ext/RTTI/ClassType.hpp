@@ -1,7 +1,7 @@
 #pragma once
 
 #include <RED4ext/RTTI/IType.hpp>
-#include <RED4ext/IO/BaseStream.hpp>
+
 #include <RED4ext/Callback.hpp>
 #include <RED4ext/DynArray.hpp>
 #include <RED4ext/HashMap.hpp>
