@@ -1,7 +1,7 @@
 #pragma once
 
 #include <RED4ext/RTTI/IType.hpp>
-
+#include <RED4ext/IO/BaseStream.hpp>
 #include <RED4ext/Callback.hpp>
 #include <RED4ext/DynArray.hpp>
 #include <RED4ext/HashMap.hpp>
@@ -13,7 +13,6 @@
 
 namespace RED4ext
 {
-struct BaseStream;
 struct Variant;
 
 namespace rtti 
@@ -137,7 +136,7 @@ RED4EXT_ASSERT_OFFSET(ClassType, nativeSize, 0x68);
 RED4EXT_ASSERT_OFFSET(ClassType, flags, 0x70);
 RED4EXT_ASSERT_OFFSET(ClassType, alignment, 0x74);
 RED4EXT_ASSERT_OFFSET(ClassType, allProps, 0x118);
-RED4EXT_ASSERT_OFFSET(ClassType, propDefaultValues, 0x158);
+RED4EXT_ASSERT_OFFSET(ClassType, defaultPropValues, 0x158);
 RED4EXT_ASSERT_OFFSET(ClassType, eventConnectors, 0x1B0);
 
 } // namespace rtti
