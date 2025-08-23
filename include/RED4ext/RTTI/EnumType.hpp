@@ -49,6 +49,10 @@ RED4EXT_ASSERT_OFFSET(EnumType, valueList, 0x38);
 RED4EXT_ASSERT_OFFSET(EnumType, aliasList, 0x48);
 RED4EXT_ASSERT_OFFSET(EnumType, aliasValueList, 0x58);
 
-}
+} // namespace rtti
 
-}
+} // namespace RED4ext
+
+#ifdef RED4EXT_HEADER_ONLY
+#include <RED4ext/RTTI/EnumType-inl.hpp>
+#endif
