@@ -25,7 +25,7 @@ struct EnumType : IType
     virtual void Construct(ScriptInstance aMemory) const final;                                              // 38
     virtual void Destruct(ScriptInstance aMemory) const final;                                               // 40
     virtual const bool Compare(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3 = 0) final; // 48
-    virtual void Copy(ScriptInstance aLhs, const ScriptInstance aRhs) const final;                           // 50
+    virtual void Copy(ScriptInstance aDest, const ScriptInstance aSrc) const final;                           // 50
     virtual bool Unserialize(BaseStream* aStream, ScriptInstance aInstance, int64_t a3) const final;         // 60
     virtual bool ToString(const ScriptInstance aInstance, CString& aOut) const final;                        // 68
     virtual bool FromString(ScriptInstance aInstance, const CString& aString) const final;                   // 70

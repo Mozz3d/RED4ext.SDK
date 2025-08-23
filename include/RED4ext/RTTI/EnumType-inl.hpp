@@ -6,7 +6,7 @@
 
 RED4EXT_INLINE RED4ext::rtti::EnumType::EnumType(CName aName, int8_t aActualSize, Flags aFlags)
     : name(aName)
-    , computedName(CBaseRTTIType::GetComputedName())
+    , scriptRefName(IType::GetRefName())
     , actualSize(aActualSize)
     , flags(aFlags)
     , hashList(Memory::RTTIAllocator::Get())
@@ -78,7 +78,7 @@ RED4EXT_INLINE const bool RED4ext::rtti::EnumType::Compare(const ScriptInstance 
     return false;
 }
 
-RED4EXT_INLINE void RED4ext::rtti::EnumType::Copy(ScriptInstance aLhs, const ScriptInstance aRhs) const
+RED4EXT_INLINE void RED4ext::rtti::EnumType::Copy(ScriptInstance aDest, const ScriptInstance aSrc) const
 {
     switch (actualSize)
     {
