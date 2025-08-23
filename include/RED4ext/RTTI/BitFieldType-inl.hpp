@@ -76,28 +76,28 @@ RED4EXT_INLINE const bool RED4ext::rtti::BitFieldType::Compare(const ScriptInsta
     return false;
 }
 
-RED4EXT_INLINE void RED4ext::rtti::BitFieldType::Copy(ScriptInstance aLhs, const ScriptInstance aRhs) const
+RED4EXT_INLINE void RED4ext::rtti::BitFieldType::Copy(ScriptInstance aDest, const ScriptInstance aSrc) const
 {
     switch (actualSize)
     {
     case 1:
     {
-        *static_cast<uint8_t*>(aLhs) = *static_cast<const uint8_t*>(aRhs);
+        *static_cast<uint8_t*>(aDest) = *static_cast<const uint8_t*>(aSrc);
         break;
     }
     case 2:
     {
-        *static_cast<uint16_t*>(aLhs) = *static_cast<const uint16_t*>(aRhs);
+        *static_cast<uint16_t*>(aDest) = *static_cast<const uint16_t*>(aSrc);
         break;
     }
     case 4:
     {
-        *static_cast<uint32_t*>(aLhs) = *static_cast<const uint32_t*>(aRhs);
+        *static_cast<uint32_t*>(aDest) = *static_cast<const uint32_t*>(aSrc);
         break;
     }
     case 8:
     {
-        *static_cast<uint64_t*>(aLhs) = *static_cast<const uint64_t*>(aRhs);
+        *static_cast<uint64_t*>(aDest) = *static_cast<const uint64_t*>(aSrc);
         break;
     }
     }
