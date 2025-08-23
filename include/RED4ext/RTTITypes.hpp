@@ -14,14 +14,27 @@ namespace RED4ext
 struct BaseStream;
 struct Variant;
 
-using CBaseRTTIType [[deprecated("Use 'rtti::IType' instead.")]] = rtti::IType;
-using CClass = [[deprecated("Use 'rtti::ClassType' instead.")]] = rtti::ClassType;
+struct [[deprecated("Use 'rtti::IType' instead.")]] CBaseRTTIType : rtti::IType
+{
+};
+
+struct [[deprecated("Use 'rtti::ClassType' instead.")]] CClass : rtti::ClassType
+{
+};
 
 template<typename T>
-using TTypedClass [[deprecated("Use 'rtti::TNativeClass' or 'rtti::TNativeClassNoCopy' respectivley instead.")]] = std::conditional_t<std::is_copy_constructible_v<T>, rtti::TNativeClass<T>, rtti::TNativeClassNoCopy<T>>;
+struct [[deprecated("Use 'rtti::TNativeClass' or 'rtti::TNativeClassNoCopy' instead.")]] TTypedClass :
+    std::conditional_t<std::is_copy_constructible_v<T>, rtti::TNativeClass<T>, rtti::TNativeClassNoCopy<T>>
+{
+};
 
-using CEnum [[deprecated("Use 'rtti::EnumType' instead.")]] = rtti::EnumType;
-using CBitfield [[deprecated("Use 'rtti::BitFieldType' instead.")]] = rtti::BitFieldType;
+struct [[deprecated("Use 'rtti::EnumType' instead.")]] CEnum : rtti::EnumType
+{
+};
+
+struct [[deprecated("Use 'rtti::BitFieldType' instead.")]] CBitfield : rtti::BitFieldType
+{
+};
 
 #pragma region Fundamentals
 using CFundamentalRTTITypeBool = CBaseRTTIType;
