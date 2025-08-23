@@ -95,6 +95,8 @@ struct ClassType : IType
     
     void ClearScriptData();
 
+    bool DeepCompare(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3);
+
     ClassType* parent;                                 // 10
     CName name;                                        // 18
     CName scriptRefName;                               // 20

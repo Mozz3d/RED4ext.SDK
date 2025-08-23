@@ -3,14 +3,9 @@
 #include <type_traits>
 
 #include <RED4ext/CName.hpp>
-#include <RED4ext/CString.hpp>
-#include <RED4ext/Callback.hpp>
 #include <RED4ext/DynArray.hpp>
-#include <RED4ext/HashMap.hpp>
 #include <RED4ext/InstanceType.hpp>
-#include <RED4ext/Map.hpp>
-#include <RED4ext/Utils.hpp>
-#include <RED4ext/RTTI/ClassType.hpp>
+#include <RED4ext/RTTI/NativeClass.hpp>
 
 namespace RED4ext
 {
@@ -24,56 +19,8 @@ using CBaseRTTIType [[deprecated("Use 'rtti::IType' instead.")]] = rtti::IType;
 using CClass = [[deprecated("Use 'rtti::ClassType' instead.")]] = rtti::ClassType;
 
 template<typename T>
-struct TTypedClass : CClass
-{
-    static_assert(std::is_class_v<T>, "T must be a struct or class");
-    static_assert(std::is_default_constructible_v<T>, "T must be default-constructible");
-    static_assert(std::is_destructible_v<T>, "T must be destructible");
+using TTypedClass [[deprecated("Use 'rtti::TNativeClass' or 'rtti::TNativeClassNoCopy' respectivley instead.")]] = std::conditional_t<std::is_copy_constructible_v<T>, rtti::TNativeClass<T>, rtti::TNativeClassNoCopy<T>>;
 
-    TTypedClass(CName aName, CClass::Flags aFlags = {.isNative = true})
-        : CClass(aName, sizeof(T), aFlags)
-    {
-    }
-
-    const bool IsEqual(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3 = 0) final // 48
-    {
-        // This is doing something extra beside comparing properties, using the native func until we figure it out.
-        using func_t = bool (*)(TTypedClass<T>*, const ScriptInstance, const ScriptInstance, uint32_t);
-        static UniversalRelocFunc<func_t> func(Detail::AddressHashes::TTypedClass_IsEqual);
-        return func(this, aLhs, aRhs, a3);
-    }
-
-    void Assign(ScriptInstance aLhs, const ScriptInstance aRhs) const final // 50
-    {
-        if constexpr (std::is_copy_constructible_v<T>)
-        {
-            new (aLhs) T(*static_cast<T*>(aRhs));
-        }
-    }
-
-    void ConstructCls(ScriptInstance aMemory) const final // D8
-    {
-        new (aMemory) T();
-    }
-
-    void DestructCls(ScriptInstance aMemory) const final // E0
-    {
-        static_cast<T*>(aMemory)->~T();
-    }
-
-    void* AllocMemory() const final // E8
-    {
-        auto classAlignment = GetAlignment();
-        auto alignedSize = AlignUp(GetSize(), classAlignment);
-
-        auto allocator = GetAllocator();
-        auto allocResult = allocator->AllocAligned(alignedSize, classAlignment);
-
-        std::memset(allocResult.memory, 0, allocResult.size);
-        return allocResult.memory;
-    }
-};
-RED4EXT_ASSERT_SIZE(TTypedClass<CName>, sizeof(CClass));
 
 struct CEnum : CBaseRTTIType
 {
