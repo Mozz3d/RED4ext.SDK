@@ -43,7 +43,7 @@ struct IType
     virtual void Construct(ScriptInstance aMemory) const = 0;                                              // 38
     virtual void Destruct(ScriptInstance aMemory) const = 0;                                               // 40
     virtual bool Compare(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3 = 0) const = 0; // 48 
-    virtual void Copy(ScriptInstance aLhs, const ScriptInstance aRhs) const = 0;                           // 50
+    virtual void Copy(ScriptInstance aDest, const ScriptInstance aSrc) const = 0;                           // 50
     virtual void Move(ScriptInstance aLhs, ScriptInstance aRhs) const;                                     // 58
     virtual bool Unserialize(BaseStream* aStream, ScriptInstance aInstance, int64_t a3) const = 0;         // 60
     virtual bool ToString(const ScriptInstance aInstance, CString& aOut) const;                            // 68

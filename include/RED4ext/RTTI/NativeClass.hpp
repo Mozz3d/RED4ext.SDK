@@ -15,7 +15,7 @@ struct TNativeClass : ClassType
 {
     virtual bool Compare(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3) const final
     {
-        return DeepCompare(aLHS, aRHS, a3);
+        return DeepCompare(aLhs, aRhs, a3);
     }
 
     virtual void Copy(ScriptInstance aDest, const ScriptInstance aSrc) const final
@@ -51,7 +51,7 @@ struct TNativeClassNoCopy : ClassType
 {
     virtual bool Compare(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3) const final
     {
-        return DeepCompare(aLHS, aRHS, a3);
+        return DeepCompare(aLhs, aRhs, a3);
     }
 
     virtual void Copy(ScriptInstance aDest, const ScriptInstance aSrc) const final
