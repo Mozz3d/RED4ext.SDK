@@ -34,7 +34,7 @@ RED4EXT_INLINE RED4ext::ERTTIType RED4ext::rtti::BitFieldType::GetType() const
     return ERTTIType::BitField;
 }
 
-RED4EXT_INLINE RED4ext::CName RED4ext::rtti::BitFieldType::GetComputedName() const
+RED4EXT_INLINE RED4ext::CName RED4ext::rtti::BitFieldType::GetRefName() const
 {
     return scriptRefName;
 }

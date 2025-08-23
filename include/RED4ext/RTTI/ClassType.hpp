@@ -79,6 +79,10 @@ struct ClassType : IType
 
     bool IsA(const IType* aType) const;
 
+    void InitializeScriptedProperties(ScriptInstance aMemory) const;
+    void InitializeScriptDefaultValues(ScriptInstance aMemory) const;
+    void InitializeProperties(ScriptInstance aInstance);
+
     void AddProperty(const Property* aProp);
     void AddPropertyOverride(const Property* aProp);
     const Property* FindProperty(const CName aName) const;
@@ -90,8 +94,6 @@ struct ClassType : IType
     void AddStaticFunction(const Function* aStaticFunc);
     const Function* FindFunction(const CName aShortName) const;
     const Function* FindFunctionByHash(uint64_t aHash) const;
-
-    void InitializeProperties(ScriptInstance aInstance);
     
     void ClearScriptData();
 
@@ -138,9 +140,9 @@ RED4EXT_ASSERT_OFFSET(ClassType, allProps, 0x118);
 RED4EXT_ASSERT_OFFSET(ClassType, propDefaultValues, 0x158);
 RED4EXT_ASSERT_OFFSET(ClassType, eventConnectors, 0x1B0);
 
-}
+} // namespace rtti
 
-}
+} // namespace RED4ext
 
 #ifdef RED4EXT_HEADER_ONLY
 #include <RED4ext/rtti/ClassType-inl.hpp>

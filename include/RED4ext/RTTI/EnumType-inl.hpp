@@ -36,7 +36,7 @@ RED4EXT_INLINE RED4ext::ERTTIType RED4ext::rtti::EnumType::GetType() const
     return ERTTIType::Enum;
 }
 
-RED4EXT_INLINE RED4ext::CName RED4ext::rtti::EnumType::GetComputedName() const
+RED4EXT_INLINE RED4ext::CName RED4ext::rtti::EnumType::GetRefName() const
 {
     return computedName;
 }
@@ -51,7 +51,7 @@ RED4EXT_INLINE void RED4ext::rtti::EnumType::Destruct(ScriptInstance aMemory) co
     RED4EXT_UNUSED_PARAMETER(aMemory);
 }
 
-RED4EXT_INLINE const bool RED4ext::rtti::EnumType::IsEqual(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3)
+RED4EXT_INLINE const bool RED4ext::rtti::EnumType::Compare(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3)
 {
     RED4EXT_UNUSED_PARAMETER(a3);
 
@@ -78,7 +78,7 @@ RED4EXT_INLINE const bool RED4ext::rtti::EnumType::IsEqual(const ScriptInstance 
     return false;
 }
 
-RED4EXT_INLINE void RED4ext::rtti::EnumType::Assign(ScriptInstance aLhs, const ScriptInstance aRhs) const
+RED4EXT_INLINE void RED4ext::rtti::EnumType::Copy(ScriptInstance aLhs, const ScriptInstance aRhs) const
 {
     switch (actualSize)
     {

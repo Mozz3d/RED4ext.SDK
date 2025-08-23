@@ -63,3 +63,7 @@ RED4EXT_ASSERT_SIZE(IType, 0x10);
 }
 using ERTTIType = rtti::ERTTIType;
 }
+
+#ifdef RED4EXT_HEADER_ONLY
+#include <RED4ext/rtti/IType-inl.hpp>
+#endif
