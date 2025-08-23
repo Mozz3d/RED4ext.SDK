@@ -182,7 +182,7 @@ struct ScriptedMemberFunction : Function
 RED4EXT_ASSERT_SIZE(ScriptedMemberFunction, 0xB8);
 RED4EXT_ASSERT_OFFSET(ScriptedMemberFunction, parent, 0xB0);
 } // namespace rtti
-
+using IFunction = rtti::IFunction;
 } // namespace RED4ext
 
 #ifdef RED4EXT_HEADER_ONLY
