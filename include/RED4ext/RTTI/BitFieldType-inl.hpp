@@ -6,7 +6,7 @@
 
 RED4EXT_INLINE RED4ext::rtti::BitFieldType::BitFieldType(CName aName, int8_t aActualSize, Flags aFlags)
     : name(aName)
-    , computedName(CBaseRTTIType::GetComputedName())
+    , scriptRefName(IType::GetRefName())
     , actualSize(aActualSize)
     , flags(aFlags)
     , validBits(0)
