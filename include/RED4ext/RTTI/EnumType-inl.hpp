@@ -38,7 +38,7 @@ RED4EXT_INLINE RED4ext::ERTTIType RED4ext::rtti::EnumType::GetType() const
 
 RED4EXT_INLINE RED4ext::CName RED4ext::rtti::EnumType::GetRefName() const
 {
-    return computedName;
+    return scriptRefName;
 }
 
 RED4EXT_INLINE void RED4ext::rtti::EnumType::Construct(ScriptInstance aMemory) const
@@ -84,22 +84,22 @@ RED4EXT_INLINE void RED4ext::rtti::EnumType::Copy(ScriptInstance aDest, const Sc
     {
     case 1:
     {
-        *static_cast<int8_t*>(aLhs) = *static_cast<const int8_t*>(aRhs);
+        *static_cast<int8_t*>(aDest) = *static_cast<const int8_t*>(aSrc);
         break;
     }
     case 2:
     {
-        *static_cast<int16_t*>(aLhs) = *static_cast<const int16_t*>(aRhs);
+        *static_cast<int16_t*>(aDest) = *static_cast<const int16_t*>(aSrc);
         break;
     }
     case 4:
     {
-        *static_cast<int32_t*>(aLhs) = *static_cast<const int32_t*>(aRhs);
+        *static_cast<int32_t*>(aDest) = *static_cast<const int32_t*>(aSrc);
         break;
     }
     case 8:
     {
-        *static_cast<int64_t*>(aLhs) = *static_cast<const int64_t*>(aRhs);
+        *static_cast<int64_t*>(aDest) = *static_cast<const int64_t*>(aSrc);
         break;
     }
     }
