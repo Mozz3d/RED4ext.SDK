@@ -115,7 +115,7 @@ RED4EXT_INLINE RED4ext::gamedataLocKeyWrapper::gamedataLocKeyWrapper(const char*
 {
 }
 
-RED4EXT_INLINE RED4ext::Variant::Variant(const RED4ext::CBaseRTTIType* aType)
+RED4EXT_INLINE RED4ext::Variant::Variant(const rtti::IType* aType)
     : Variant()
 {
     if (aType)
@@ -124,7 +124,7 @@ RED4EXT_INLINE RED4ext::Variant::Variant(const RED4ext::CBaseRTTIType* aType)
     }
 }
 
-RED4EXT_INLINE RED4ext::Variant::Variant(const RED4ext::CBaseRTTIType* aType, const RED4ext::ScriptInstance aData)
+RED4EXT_INLINE RED4ext::Variant::Variant(const rtti::IType* aType, const ScriptInstance aData)
     : Variant()
 {
     if (aType)
@@ -133,13 +133,13 @@ RED4EXT_INLINE RED4ext::Variant::Variant(const RED4ext::CBaseRTTIType* aType, co
     }
 }
 
-RED4EXT_INLINE RED4ext::Variant::Variant(RED4ext::CName aTypeName)
-    : Variant(RED4ext::CRTTISystem::Get()->GetType(aTypeName))
+RED4EXT_INLINE RED4ext::Variant::Variant(CName aTypeName)
+    : Variant(RTTISystem::Get()->FindType(aTypeName))
 {
 }
 
-RED4EXT_INLINE RED4ext::Variant::Variant(RED4ext::CName aTypeName, const RED4ext::ScriptInstance aData)
-    : Variant(RED4ext::CRTTISystem::Get()->GetType(aTypeName), aData)
+RED4EXT_INLINE RED4ext::Variant::Variant(CName aTypeName, const ScriptInstance aData)
+    : Variant(RTTISystem::Get()->FindType(aTypeName), aData)
 {
 }
 
@@ -188,9 +188,9 @@ RED4EXT_INLINE bool RED4ext::Variant::IsInlined() const noexcept
     return reinterpret_cast<uintptr_t>(type) & InlineFlag;
 }
 
-RED4EXT_INLINE RED4ext::CBaseRTTIType* RED4ext::Variant::GetType() const noexcept
+RED4EXT_INLINE RED4ext::rtti::IType* RED4ext::Variant::GetType() const noexcept
 {
-    return reinterpret_cast<RED4ext::CBaseRTTIType*>(reinterpret_cast<uintptr_t>(type) & TypeMask);
+    return reinterpret_cast<rtti::IType*>(reinterpret_cast<uintptr_t>(type) & TypeMask);
 }
 
 RED4EXT_INLINE RED4ext::ScriptInstance RED4ext::Variant::GetDataPtr() const noexcept
@@ -198,7 +198,7 @@ RED4EXT_INLINE RED4ext::ScriptInstance RED4ext::Variant::GetDataPtr() const noex
     return IsInlined() ? const_cast<uint8_t*>(inlined) : instance;
 }
 
-RED4EXT_INLINE bool RED4ext::Variant::Init(const RED4ext::CBaseRTTIType* aType)
+RED4EXT_INLINE bool RED4ext::Variant::Init(const rtti::IType* aType)
 {
     if (!aType)
     {
@@ -206,8 +206,8 @@ RED4EXT_INLINE bool RED4ext::Variant::Init(const RED4ext::CBaseRTTIType* aType)
         return false;
     }
 
-    RED4ext::CBaseRTTIType* ownType = GetType();
-    RED4ext::ScriptInstance ownData = GetDataPtr();
+    rtti::IType* ownType = GetType();
+    ScriptInstance ownData = GetDataPtr();
 
     if (ownType)
     {
@@ -241,7 +241,7 @@ RED4EXT_INLINE bool RED4ext::Variant::Init(const RED4ext::CBaseRTTIType* aType)
     return true;
 }
 
-RED4EXT_INLINE bool RED4ext::Variant::Fill(const RED4ext::CBaseRTTIType* aType, const RED4ext::ScriptInstance aData)
+RED4EXT_INLINE bool RED4ext::Variant::Fill(const rtti::IType* aType, const ScriptInstance aData)
 {
     if (!Init(aType))
         return false;
@@ -254,7 +254,7 @@ RED4EXT_INLINE bool RED4ext::Variant::Fill(const RED4ext::CBaseRTTIType* aType, 
     return true;
 }
 
-RED4EXT_INLINE bool RED4ext::Variant::Extract(RED4ext::ScriptInstance aBuffer)
+RED4EXT_INLINE bool RED4ext::Variant::Extract(ScriptInstance aBuffer)
 {
     if (IsEmpty())
         return false;
@@ -269,8 +269,8 @@ RED4EXT_INLINE void RED4ext::Variant::Free()
     if (IsEmpty())
         return;
 
-    RED4ext::CBaseRTTIType* ownType = GetType();
-    RED4ext::ScriptInstance ownData = GetDataPtr();
+    rtti::IType* ownType = GetType();
+    ScriptInstance ownData = GetDataPtr();
 
     if (ownData)
     {
@@ -284,7 +284,7 @@ RED4EXT_INLINE void RED4ext::Variant::Free()
     type = nullptr;
 }
 
-RED4EXT_INLINE bool RED4ext::Variant::CanBeInlined(const RED4ext::CBaseRTTIType* aType) noexcept
+RED4EXT_INLINE bool RED4ext::Variant::CanBeInlined(const rtti::IType* aType) noexcept
 {
     return aType->GetSize() <= InlineSize && aType->GetAlignment() <= InlineAlignment;
 }
