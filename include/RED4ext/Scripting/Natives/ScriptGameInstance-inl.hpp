@@ -20,8 +20,8 @@ RED4EXT_INLINE RED4ext::ScriptGameInstance::ScriptGameInstance(GameInstance* aIn
         flag,
         []()
         {
-            auto rtti = CRTTISystem::Get();
-            auto gameInstanceType = rtti->GetClass("ScriptGameInstance");
+            auto rtti = RTTISystem::Get();
+            auto gameInstanceType = rtti->FindClass("ScriptGameInstance");
 
             constexpr auto compiledSize = sizeof(ScriptGameInstance);
             auto nativeSize = gameInstanceType->GetSize();
@@ -38,7 +38,7 @@ RED4EXT_INLINE RED4ext::ScriptGameInstance::ScriptGameInstance(GameInstance* aIn
 
     if (!aInstance)
     {
-        auto engine = RED4ext::CGameEngine::Get();
+        auto engine = CGameEngine::Get();
         if (engine)
         {
             auto framework = engine->framework;
