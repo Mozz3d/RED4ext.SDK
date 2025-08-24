@@ -5,9 +5,19 @@
 
 namespace RED4ext
 {
-using CBaseFunction [[deprecated("Use 'rtti::Function' instead.")]] = rtti::Function;
-using CGlobalFunction [[deprecated("Use 'rtti::NativeGlobalFunction' instead.")]] = rtti::NativeGlobalFunction;
-using CClassFunction [[deprecated("Use 'rtti::NativeMemberFunction' instead.")]] = rtti::NativeMemberFunction;
-using CClassStaticFunction [[deprecated("Use 'rtti::NativeMemberFunction' instead.")]] = rtti::NativeMemberFunction;
-using CScriptedFunction [[deprecated("Use 'rtti::ScriptedMemberFunction' instead.")]] = rtti::ScriptedMemberFunction;
+struct [[deprecated("Use 'rtti::Function' instead.")]] CBaseFunction : rtti::Function
+{
+};
+struct [[deprecated("Use 'rtti::NativeGlobalFunction' instead.")]] CGlobalFunction : rtti::NativeGlobalFunction
+{
+};
+struct [[deprecated("Use 'rtti::NativeMemberFunction' instead.")]] CClassFunction : rtti::NativeMemberFunction
+{
+};
+struct [[deprecated("Use 'rtti::NativeMemberFunction' instead.")]] CClassStaticFunction : rtti::NativeMemberFunction
+{
+};
+struct [[deprecated("Use 'rtti::ScriptedMemberFunction' instead.")]] CScriptedFunction : rtti::ScriptedMemberFunction
+{
+};
 } // namespace RED4ext
