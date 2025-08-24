@@ -127,6 +127,7 @@ struct RTTIRegistrator
 RED4EXT_ASSERT_SIZE(RTTIRegistrator, 0x01);
 
 } // namespace rtti
+using RTTISystem = rtti::TypeSystemImpl;
 using CRTTISystem [[deprecated("Use 'rtti::TypeSystemImpl' instead.")]] = rtti::TypeSystemImpl;
 using RTTIRegistrator = rtti::RTTIRegistrator;
 } // namespace RED4ext
