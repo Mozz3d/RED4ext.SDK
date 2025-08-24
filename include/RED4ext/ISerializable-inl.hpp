@@ -52,16 +52,16 @@ RED4EXT_INLINE bool RED4ext::ISerializable::sub_40(BaseStream* aStream)
     return func(this, aStream);
 }
 
-RED4EXT_INLINE bool RED4ext::ISerializable::sub_48(int64_t a1)
+RED4EXT_INLINE bool RED4ext::ISerializable::SerializeToText(int64_t a1)
 {
     auto type = GetType();
-    return type->sub_80(a1, this);
+    return type->SerializeToText(a1, this);
 }
 
-RED4EXT_INLINE bool RED4ext::ISerializable::sub_50(int64_t a1)
+RED4EXT_INLINE bool RED4ext::ISerializable::SerializeFromText(int64_t a1)
 {
     auto type = GetType();
-    return type->sub_88(a1, this);
+    return type->SerializeFromText(a1, this);
 }
 
 RED4EXT_INLINE bool RED4ext::ISerializable::sub_58()

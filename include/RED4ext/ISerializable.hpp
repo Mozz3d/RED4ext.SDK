@@ -40,8 +40,8 @@ struct ISerializable
     virtual bool sub_30();                                                              // 30
     virtual void sub_38();                                                              // 38
     virtual bool sub_40(BaseStream* aStream);                                           // 40
-    virtual bool sub_48(int64_t a1);                                                    // 48
-    virtual bool sub_50(int64_t a1);                                                    // 50
+    virtual bool SerializeToText(int64_t a1);                                           // 48
+    virtual bool SerializeFromText(int64_t a1);                                         // 50
     virtual bool sub_58();                                                              // 58
     virtual bool sub_60();                                                              // 60
     virtual bool sub_68();                                                              // 68
