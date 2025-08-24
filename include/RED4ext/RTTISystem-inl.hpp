@@ -13,7 +13,7 @@ RED4EXT_INLINE RED4ext::rtti::TypeSystemImpl* RED4ext::rtti::TypeSystemImpl::Get
     return func();
 }
 
-RED4EXT_INLINE void RED4ext::rtti::TypeSystemImpl::RegisterType(CBaseRTTIType* aType)
+RED4EXT_INLINE void RED4ext::rtti::TypeSystemImpl::RegisterType(IType* aType)
 {
     RegisterType(aType, RTTIRegistrator::GetNextId());
 }
