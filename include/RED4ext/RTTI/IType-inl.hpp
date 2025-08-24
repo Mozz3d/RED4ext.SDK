@@ -4,12 +4,14 @@
 #include <RED4ext/RTTI/IType.hpp>
 #endif
 
+#include <RED4ext/CNamePool.hpp>
+
 RED4EXT_INLINE RED4ext::rtti::IType::IType()
     : unk8(0)
 {
 }
 
-RED4EXT_INLINE RED4ext::CString RED4ext::rtti::IType::GetTypeName() const
+RED4EXT_INLINE RED4ext::CString RED4ext::rtti::IType::GetERTTITypeString() const
 {
     switch (GetType())
     {
