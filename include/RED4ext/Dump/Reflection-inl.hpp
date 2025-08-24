@@ -160,8 +160,8 @@ RED4EXT_INLINE void Dump(std::filesystem::path aOutPath, std::filesystem::path a
     // Second pass traverse parents to move properties into parent class if it happened to be abstract
     for (auto& [classType, builder] : descriptorMap)
     {
-        std::stack<const rtii::ClassType*> stack;
-        const rtii::ClassType* parent = classType->parent;
+        std::stack<const rtti::ClassType*> stack;
+        const rtti::ClassType* parent = classType->parent;
         while (parent)
         {
             stack.push(parent);
@@ -483,8 +483,8 @@ RED4EXT_INLINE EnumFileDescriptor::EnumFileDescriptor(const rtti::EnumType* pEnu
     directory = aTypeToPath(pEnum);
 
     auto rtti = RTTISystem::Get();
-    auto aliasName = rtti->nativeToScript.Get(enumName);
-    if (aliasName && !rtti->types.Get(*aliasName))
+    auto aliasName = rtti->nativeNameToScriptName.Get(enumName);
+    if (aliasName && !rtti->typesByName.Get(*aliasName))
     {
         alias = aliasName->ToString();
     }
@@ -655,8 +655,8 @@ RED4EXT_INLINE BitfieldFileDescriptor::BitfieldFileDescriptor(const rtti::BitFie
     directory = aTypeToPath(pBitfield);
 
     auto rtti = RTTISystem::Get();
-    auto aliasName = rtti->nativeToScript.Get(bitfieldName);
-    if (aliasName && !rtti->types.Get(*aliasName))
+    auto aliasName = rtti->nativeNameToScriptName.Get(bitfieldName);
+    if (aliasName && !rtti->typesByName.Get(*aliasName))
     {
         alias = aliasName->ToString();
     }
@@ -784,8 +784,8 @@ RED4EXT_INLINE void ClassDependencyBuilder::ToFileDescriptor(ClassFileDescriptor
     aFd.nameQualified = aQualifiedTransformer(pType);
 
     auto rtti = RTTISystem::Get();
-    auto aliasName = rtti->nativeToScript.Get(name);
-    if (aliasName && !rtti->types.Get(*aliasName))
+    auto aliasName = rtti->nativeNameToScriptName.Get(name);
+    if (aliasName && !rtti->typesByName.Get(*aliasName))
     {
         aFd.alias = aliasName->ToString();
     }
@@ -996,7 +996,7 @@ RED4EXT_INLINE std::string TypeToString(const rtti::IType* aType, NameTransforme
         auto trueName = aType->GetName();
 
         uint32_t size = aType->GetSize();
-        auto tName = aType->GetTypeName();
+        auto tName = aType->GetName();
 
         // We don't have this type supported yet but we can put some bytes in as placeholder as we know its size
         typeName = "std::array<uint8_t, " + std::to_string(size) + ">/* UNHANDLED: " + trueName.ToString() + " (" +

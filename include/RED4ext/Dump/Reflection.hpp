@@ -27,7 +27,7 @@ using NameTransformer = std::function<std::string(const rtti::IType*)>;
 using DescriptorPath = std::function<std::string(const rtti::IType*)>;
 using NamespaceTransformer = std::function<std::vector<std::string>(const rtti::IType*)>;
 using TypeChecker = std::function<bool(const rtti::IType*)>;
-using FixedTypeMapping = std::unordered_map<CName, std::string, RCName>;
+using FixedTypeMapping = std::unordered_map<CName, std::string, CName>;
 
 static constexpr const char* INVALID_CHARACTERS = R"(-|'|\(|\)|\]|\[|/|\.|\s|:)";
 // small conflicts with windows macro
