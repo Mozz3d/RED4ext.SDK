@@ -95,38 +95,38 @@ struct ClassType : IType
     const Function* FindFunction(const CName aShortName) const;
     const Function* FindFunctionByHash(uint64_t aHash) const;
 
-    void ClearScriptData();
+    void ClearScriptedData();
 
     bool DeepCompare(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3);
 
-    ClassType* parent;                        // 10
-    CName name;                               // 18
-    CName scriptRefName;                      // 20
-    DynArray<Property*> directProps;          // 28 - properties direct to this class
-    DynArray<Property*> overriddenProps;      // 38
-    DynArray<Function*> funcs;                // 48
-    DynArray<Function*> staticFuncs;          // 58
-    uint32_t nativeSize;                      // 68 - size of the class nativley
-    uint32_t scriptSize;                      // 6C - size of the class as calculated from script layout
-    Flags flags;                              // 70
-    uint32_t alignment;                       // 74
-    HashMap<CName, Function*> funcsByName;    // 78
-    HashMap<uint64_t, Function*> funcsByHash; // A8
-    int64_t unkD8;                            // D8
-    int64_t unkE0;                            // E0
-    HashMap<CName, Property*> propsByName;    // E8
-    DynArray<Property*> allProps;             // 118 - all properties, including those of parent classes
-    DynArray<Property*> unk128;               // 128
-    DynArray<Property*> unk138;               // 138 - Only RT_Class types?
-    DynArray<void*> unk148;                   // 148
-    Map<CName, Variant*> defaultPropValues;   // 158
-    HashMap<void*, void*> unk180;             // 180
-    DynArray<Connector> eventConnectors;      // 1B0
-    uint32_t connectedEventsMask[64];         // 1C0 - Bitset of event types that this class listens to
-    std::atomic<int16_t> eventTypeId;         // 2C0 - Assigned to event classes only
-    int32_t unk2C4;                           // 2C4
-    SharedSpinLock unk2C8;                    // 2C8
-    uint8_t unk2C9;                           // 2C9
+    ClassType* parent;                              // 10
+    CName name;                                     // 18
+    CName scriptRefName;                            // 20
+    DynArray<const Property*> directProps;          // 28 - properties direct to this class
+    DynArray<const Property*> overriddenProps;      // 38
+    DynArray<const Function*> funcs;                // 48
+    DynArray<const Function*> staticFuncs;          // 58
+    uint32_t nativeSize;                            // 68 - size of the class nativley
+    uint32_t scriptSize;                            // 6C - size of the class as calculated from script layout
+    Flags flags;                                    // 70
+    uint32_t alignment;                             // 74
+    HashMap<CName, const Function*> funcsByName;    // 78
+    HashMap<uint64_t, const Function*> funcsByHash; // A8
+    int64_t unkD8;                                  // D8
+    int64_t unkE0;                                  // E0
+    HashMap<CName, const Property*> propsByName;    // E8
+    DynArray<const Property*> allProps;             // 118 - all properties, including those of parent classes
+    DynArray<const Property*> unk128;               // 128
+    DynArray<const Property*> unk138;               // 138 - Only RT_Class types?
+    DynArray<void*> unk148;                         // 148
+    Map<CName, Variant*> defaultPropValues;         // 158
+    HashMap<void*, void*> unk180;                   // 180
+    DynArray<Connector> eventConnectors;            // 1B0
+    uint32_t connectedEventsMask[64];               // 1C0 - Bitset of event types that this class listens to
+    std::atomic<int16_t> eventTypeId;               // 2C0 - Assigned to event classes only
+    int32_t unk2C4;                                 // 2C4
+    SharedSpinLock unk2C8;                          // 2C8
+    uint8_t unk2C9;                                 // 2C9
 };
 RED4EXT_ASSERT_SIZE(ClassType, 0x2D0);
 RED4EXT_ASSERT_OFFSET(ClassType, parent, 0x10);

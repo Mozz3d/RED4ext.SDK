@@ -180,14 +180,14 @@ RED4EXT_INLINE bool RED4ext::rtti::ClassType::IsA(const IType* aType) const
 
 RED4EXT_INLINE void RED4ext::rtti::ClassType::InitializeScriptedProperties(ScriptInstance aMemory) const
 {
-    static UniversalRelocFunc<void (*)(ClassType*, ScriptInstance)> func(
+    static UniversalRelocFunc<void (*)(const ClassType*, ScriptInstance)> func(
         Detail::AddressHashes::CClass_InitializeProperties);
     func(this, aMemory);
 }
 
 RED4EXT_INLINE void RED4ext::rtti::ClassType::InitializeScriptDefaultValues(ScriptInstance aMemory) const
 {
-    static UniversalRelocFunc<void (*)(ClassType*, ScriptInstance)> func(
+    static UniversalRelocFunc<void (*)(const ClassType*, ScriptInstance)> func(
         Detail::AddressHashes::CClass_AssignDefaultValuesToProperties);
     func(this, aMemory);
 }
@@ -198,22 +198,22 @@ RED4EXT_INLINE void RED4ext::rtti::ClassType::InitializeProperties(ScriptInstanc
     InitializeScriptDefaultValues(aInstance);
 }
 
-RED4EXT_INLINE void RED4ext::rtti::ClassType::AddProperty(const Property* aProp);
+RED4EXT_INLINE void RED4ext::rtti::ClassType::AddProperty(const Property* aProp)
 {
     directProps.PushBack(aProp);
 }
 
-RED4EXT_INLINE void RED4ext::rtti::ClassType::AddPropertyOverride(const Property* aProp);
+RED4EXT_INLINE void RED4ext::rtti::ClassType::AddPropertyOverride(const Property* aProp)
 {
     overriddenProps.PushBack(aProp);
 }
 
-RED4EXT_INLINE RED4ext::rtti::Property* RED4ext::rtti::ClassType::FindProperty(const CName aName)
+RED4EXT_INLINE const RED4ext::rtti::Property* RED4ext::rtti::ClassType::FindProperty(const CName aName) const
 {
     // Not recreating this because they do something strage with overriden properties and I am not sure what exactly
     // they do.
 
-    using func_t = Property* (*)(ClassType*, CName);
+    using func_t = Property* (*)(const ClassType*, CName);
     static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CClass_GetProperty);
     return func(this, aName);
 }
@@ -225,17 +225,17 @@ RED4EXT_INLINE void RED4ext::rtti::ClassType::GetProperties(DynArray<Property*>&
     func(this, aProps);
 }
 
-RED4EXT_INLINE void RED4ext::rtti::ClassType::AddFunction(const Function* aFunc);
+RED4EXT_INLINE void RED4ext::rtti::ClassType::AddFunction(const Function* aFunc)
 {
     funcs.PushBack(aFunc);
 }
 
-RED4EXT_INLINE void RED4ext::rtti::ClassType::AddStaticFunction(const Function* aStaticFunc);
+RED4EXT_INLINE void RED4ext::rtti::ClassType::AddStaticFunction(const Function* aStaticFunc)
 {
-    staticFuncs.PushBack(aFunc);
+    staticFuncs.PushBack(aStaticFunc);
 }
 
-RED4EXT_INLINE RED4ext::rtti::Function* RED4ext::rtti::ClassType::FindFunction(CName aShortName) const
+RED4EXT_INLINE const RED4ext::rtti::Function* RED4ext::rtti::ClassType::FindFunction(CName aShortName) const
 {
     if (auto** func = funcsByName.Get(aShortName))
     {
@@ -250,7 +250,7 @@ RED4EXT_INLINE RED4ext::rtti::Function* RED4ext::rtti::ClassType::FindFunction(C
     return nullptr;
 }
 
-RED4EXT_INLINE RED4ext::rtti::Function* RED4ext::rtti::ClassType::FindFunctionByHash(uint64_t aHash) const
+RED4EXT_INLINE const RED4ext::rtti::Function* RED4ext::rtti::ClassType::FindFunctionByHash(uint64_t aHash) const
 {
     if (auto** func = funcsByHash.Get(aHash))
     {
@@ -285,7 +285,7 @@ RED4EXT_INLINE void RED4ext::rtti::ClassType::ClearScriptedData()
 }
 
 RED4EXT_INLINE bool RED4ext::rtti::ClassType::DeepCompare(const ScriptInstance aLhs, const ScriptInstance aRhs,
-                                                          uint32_t a3)()
+                                                          uint32_t a3)
 {
     using func_t = bool (*)(ClassType*, const void*, const void*, uint32_t);
     static UniversalRelocFunc<func_t> func(Detail::AddressHashes::TTypedClass_IsEqual);
