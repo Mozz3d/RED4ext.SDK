@@ -5,7 +5,7 @@
 #include <RED4ext/CString.hpp>
 #include <RED4ext/Detail/AddressHashes.hpp>
 #include <RED4ext/Memory/Allocators.hpp>
-#include <RED4ext/RTTITypes.hpp>
+#include <RED4ext/RTTI/ClassType.hpp>
 #include <RED4ext/Relocation.hpp>
 
 RED4EXT_INLINE RED4ext::ISerializable::ISerializable()
@@ -15,7 +15,7 @@ RED4EXT_INLINE RED4ext::ISerializable::ISerializable()
     unk28 = InterlockedIncrement64(s_globalIDCounter.GetAddr());
 }
 
-RED4EXT_INLINE RED4ext::CClass* RED4ext::ISerializable::GetType()
+RED4EXT_INLINE RED4ext::rtti::ClassType* RED4ext::ISerializable::GetType()
 {
     return GetNativeType();
 }
@@ -118,7 +118,7 @@ RED4EXT_INLINE void* RED4ext::ISerializable::sub_A0()
     return func(this);
 }
 
-RED4EXT_INLINE RED4ext::CClass* RED4ext::ISerializable::sub_A8()
+RED4EXT_INLINE RED4ext::rtti::ClassType* RED4ext::ISerializable::sub_A8()
 {
     return GetType();
 }
