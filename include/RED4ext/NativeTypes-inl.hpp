@@ -249,7 +249,7 @@ RED4EXT_INLINE bool RED4ext::Variant::Fill(const rtti::IType* aType, const Scrip
     if (!aData)
         return false;
 
-    GetType()->Assign(GetDataPtr(), aData);
+    GetType()->Copy(GetDataPtr(), aData);
 
     return true;
 }
@@ -259,7 +259,7 @@ RED4EXT_INLINE bool RED4ext::Variant::Extract(ScriptInstance aBuffer)
     if (IsEmpty())
         return false;
 
-    GetType()->Assign(aBuffer, GetDataPtr());
+    GetType()->Copy(aBuffer, GetDataPtr());
 
     return true;
 }
