@@ -4,7 +4,7 @@
 #include <RED4ext/RTTI/IType.hpp>
 #endif
 
-RED4EXT_INLINE RED4ext::rtti::IType::CBaseRTTIType()
+RED4EXT_INLINE RED4ext::rtti::IType::IType()
     : unk8(0)
 {
 }
