@@ -10,7 +10,7 @@
 #include <RED4ext/Map.hpp>
 #include <RED4ext/NativeTypes.hpp>
 #include <RED4ext/RTTISystem.hpp>
-#include <RED4ext/RTTITypes.hpp>
+#include <RED4ext/RTTI/IType.hpp>
 #include <RED4ext/Scripting/IScriptable.hpp>
 #include <RED4ext/Scripting/Natives/Generated/Color.hpp>
 #include <RED4ext/Scripting/Natives/Generated/EulerAngles.hpp>
@@ -152,7 +152,7 @@ struct TweakDB
     bool unk38;                     // 38
     SortedUniqueArray<TweakDBID> flats;                                   // 40
     HashMap<TweakDBID, Handle<IScriptable>> recordsByID;                  // 58
-    HashMap<CBaseRTTIType*, DynArray<Handle<IScriptable>>> recordsByType; // 88
+    HashMap<rtti::IType*, DynArray<Handle<IScriptable>>> recordsByType; // 88
     Map<TweakDBID, DynArray<TweakDBID>> queries;                          // B8
     Map<TweakDBID, GroupTag> groups;                                      // E0
     HashMap<CName, FlatValue*> defaultValues;                             // 108
@@ -187,8 +187,8 @@ struct TweakDB
     Handle<IScriptable> GetRecord(TweakDBID aDBID);
     bool TryGetRecord(TweakDBID aDBID, Handle<IScriptable>& aRecord);
 
-    DynArray<Handle<IScriptable>> GetRecordsByType(CBaseRTTIType* aType);
-    bool TryGetRecordsByType(CBaseRTTIType* aType, DynArray<Handle<IScriptable>>& aRecordsArray);
+    DynArray<Handle<IScriptable>> GetRecordsByType(rtti::IType* aType);
+    bool TryGetRecordsByType(rtti::IType* aType, DynArray<Handle<IScriptable>>& aRecordsArray);
 
     bool AddQuery(TweakDBID aDBID, const DynArray<TweakDBID>& aArray);
     bool ReplaceQuery(TweakDBID aDBID, const DynArray<TweakDBID>& aArray);
@@ -206,7 +206,7 @@ struct TweakDB
     // Updates all the value offsets inside the record
     bool UpdateRecord(gamedataTweakDBRecord* aRecord);
 
-    bool CreateRecord(TweakDBID aDBID, CBaseRTTIType* aType);
+    bool CreateRecord(TweakDBID aDBID, rtti::IType* aType);
     bool CreateRecord(TweakDBID aDBID, uint32_t aTweakBaseHash);
     bool RemoveRecord(TweakDBID aDBID);
 
