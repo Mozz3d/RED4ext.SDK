@@ -5,7 +5,7 @@
 #endif
 
 #include <RED4ext/Detail/AddressHashes.hpp>
-#include <RED4ext/RTTITypes.hpp>
+#include <RED4ext/RTTI/ClassType.hpp>
 #include <RED4ext/Relocation.hpp>
 
 RED4EXT_INLINE RED4ext::IScriptable::IScriptable()
@@ -19,7 +19,7 @@ RED4EXT_INLINE RED4ext::IScriptable::~IScriptable()
     DestructValueHolder();
 }
 
-RED4EXT_INLINE RED4ext::CClass* RED4ext::IScriptable::GetType()
+RED4EXT_INLINE RED4ext::rtti::ClassType* RED4ext::IScriptable::GetType()
 {
     if (nativeType)
     {
