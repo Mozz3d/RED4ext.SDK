@@ -1,18 +1,18 @@
 #pragma once
 
 #ifdef RED4EXT_STATIC_LIB
-#include <RED4ext/Scripting/Functions.hpp>
+#include <RED4ext/RTTI/Function.hpp>
 #endif
 
 #include <RED4ext/CNamePool.hpp>
 #include <RED4ext/Detail/AddressHashes.hpp>
 #include <RED4ext/RTTISystem.hpp>
 #include <RED4ext/Relocation.hpp>
-#include <RED4ext/Scripting/CProperty.hpp>
+#include <RED4ext/RTTI/Property.hpp>
 #include <RED4ext/Scripting/OpcodeHandlers.hpp>
 #include <RED4ext/Scripting/Stack.hpp>
 
-RED4EXT_INLINE bool RED4ext::CBaseFunction::SetReturnType(CName aType)
+RED4EXT_INLINE bool RED4ext::rtti::Function::SetReturnType(CName aType)
 {
     auto rtti = CRTTISystem::Get();
     auto type = rtti->GetType(aType);
@@ -21,14 +21,14 @@ RED4EXT_INLINE bool RED4ext::CBaseFunction::SetReturnType(CName aType)
         return false;
     }
 
-    CProperty::Flags propertyFlags{};
+    Property::Flags propertyFlags{};
     propertyFlags.isReturn = true;
 
-    returnType = CProperty::Create(type, "__return", nullptr, 0, {}, propertyFlags);
+    returnType = Property::Create(type, "__return", nullptr, 0, {}, propertyFlags);
     return returnType != nullptr;
 }
 
-RED4EXT_INLINE bool RED4ext::CBaseFunction::AddParam(CName aType, const char* aName, bool aIsOut, bool aIsOptional)
+RED4EXT_INLINE bool RED4ext::rtti::Function::AddParam(CName aType, const char* aName, bool aIsOut, bool aIsOptional)
 {
     auto rtti = CRTTISystem::Get();
     auto type = rtti->GetType(aType);
@@ -37,11 +37,11 @@ RED4EXT_INLINE bool RED4ext::CBaseFunction::AddParam(CName aType, const char* aN
         return false;
     }
 
-    CProperty::Flags paramFlags{};
+    Property::Flags paramFlags{};
     paramFlags.isOut = aIsOut;
     paramFlags.isOptional = aIsOptional;
 
-    auto param = CProperty::Create(type, aName, nullptr, unkAC, nullptr, paramFlags);
+    auto param = Property::Create(type, aName, nullptr, unkAC, nullptr, paramFlags);
     if (!param)
     {
         return false;
@@ -51,26 +51,26 @@ RED4EXT_INLINE bool RED4ext::CBaseFunction::AddParam(CName aType, const char* aN
     return true;
 }
 
-RED4EXT_INLINE bool RED4ext::CBaseFunction::Execute(CStack* aStack)
+RED4EXT_INLINE bool RED4ext::rtti::Function::Execute(CStack* aStack)
 {
     if (!flags.isNative)
     {
-        using executeScriptedFn_t = bool (*)(CBaseFunction*, CStack*, void*);
+        using executeScriptedFn_t = bool (*)(Function*, CStack*, void*);
         static UniversalRelocFunc<executeScriptedFn_t> executeScriptedFn(
             Detail::AddressHashes::CBaseFunction_ExecuteScripted);
         return executeScriptedFn(this, aStack, nullptr);
     }
 
-    using executeNativeFn_t = bool (*)(CBaseFunction*, CStack*);
+    using executeNativeFn_t = bool (*)(Function*, CStack*);
     static UniversalRelocFunc<executeNativeFn_t> executeNativeFn(Detail::AddressHashes::CBaseFunction_ExecuteNative);
     return executeNativeFn(this, aStack);
 }
 
-RED4EXT_INLINE bool RED4ext::CBaseFunction::Execute_(CStack* aStack)
+RED4EXT_INLINE bool RED4ext::rtti::Function::Execute_(CStack* aStack)
 {
     if (!flags.isNative)
     {
-        using func_t = bool (*)(CBaseFunction*, CStack*);
+        using func_t = bool (*)(Function*, CStack*);
         static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CBaseFunction_ExecuteScripted);
         return func(this, aStack);
     }
@@ -82,13 +82,13 @@ RED4EXT_INLINE bool RED4ext::CBaseFunction::Execute_(CStack* aStack)
     return ExecuteNative(aStack, stackFrame);
 }
 
-RED4EXT_INLINE RED4ext::CBaseFunction::Handler_t RED4ext::CBaseFunction::GetHandler(uint32_t aIndex)
+RED4EXT_INLINE RED4ext::rtti::Function::Handler_t RED4ext::rtti::Function::GetHandler(uint32_t aIndex)
 {
     static UniversalRelocPtr<Handler_t*> handlers(Detail::AddressHashes::CBaseFunction_Handlers);
     return handlers[aIndex];
 }
 
-RED4EXT_INLINE bool RED4ext::CBaseFunction::ExecuteNative(CStack* aStack, CStackFrame& aFrame)
+RED4EXT_INLINE bool RED4ext::rtti::Function::ExecuteNative(CStack* aStack, CStackFrame& aFrame)
 {
     auto context = aStack->GetContext();
     auto resultType = aStack->GetResultType();

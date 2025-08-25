@@ -2,4 +2,4 @@
 #error Please define 'RED4EXT_STATIC_LIB' to compile this file.
 #endif
 
-#include <RED4ext/Scripting/Functions-inl.hpp>
+#include <RED4ext/RTTI/Function-inl.hpp>
