@@ -1,157 +1,18 @@
 #pragma once
 
-#include <type_traits>
-
 #include <RED4ext/CName.hpp>
-#include <RED4ext/CString.hpp>
-#include <RED4ext/Callback.hpp>
 #include <RED4ext/DynArray.hpp>
-#include <RED4ext/HashMap.hpp>
 #include <RED4ext/InstanceType.hpp>
-#include <RED4ext/Map.hpp>
-#include <RED4ext/Utils.hpp>
+#include <RED4ext/RTTI/NativeClass.hpp>
+#include <RED4ext/RTTI/EnumType.hpp>
+#include <RED4ext/RTTI/BitFieldType.hpp>
+
+#include <type_traits>
 
 namespace RED4ext
 {
 struct BaseStream;
-struct CProperty;
-struct CClassFunction;
-struct CClassStaticFunction;
 struct Variant;
-
-template<typename T>
-struct TTypedClass : CClass
-{
-    static_assert(std::is_class_v<T>, "T must be a struct or class");
-    static_assert(std::is_default_constructible_v<T>, "T must be default-constructible");
-    static_assert(std::is_destructible_v<T>, "T must be destructible");
-
-    TTypedClass(CName aName, CClass::Flags aFlags = {.isNative = true})
-        : CClass(aName, sizeof(T), aFlags)
-    {
-    }
-
-    const bool IsEqual(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3 = 0) final // 48
-    {
-        // This is doing something extra beside comparing properties, using the native func until we figure it out.
-        using func_t = bool (*)(TTypedClass<T>*, const ScriptInstance, const ScriptInstance, uint32_t);
-        static UniversalRelocFunc<func_t> func(Detail::AddressHashes::TTypedClass_IsEqual);
-        return func(this, aLhs, aRhs, a3);
-    }
-
-    void Assign(ScriptInstance aLhs, const ScriptInstance aRhs) const final // 50
-    {
-        if constexpr (std::is_copy_constructible_v<T>)
-        {
-            new (aLhs) T(*static_cast<T*>(aRhs));
-        }
-    }
-
-    void ConstructCls(ScriptInstance aMemory) const final // D8
-    {
-        new (aMemory) T();
-    }
-
-    void DestructCls(ScriptInstance aMemory) const final // E0
-    {
-        static_cast<T*>(aMemory)->~T();
-    }
-
-    void* AllocMemory() const final // E8
-    {
-        auto classAlignment = GetAlignment();
-        auto alignedSize = AlignUp(GetSize(), classAlignment);
-
-        auto allocator = GetAllocator();
-        auto allocResult = allocator->AllocAligned(alignedSize, classAlignment);
-
-        std::memset(allocResult.memory, 0, allocResult.size);
-        return allocResult.memory;
-    }
-};
-RED4EXT_ASSERT_SIZE(TTypedClass<CName>, sizeof(CClass));
-
-struct CEnum : CBaseRTTIType
-{
-    struct Flags
-    {
-        uint8_t isScripted : 1; // 00
-        uint8_t b2 : 7;
-    };
-    RED4EXT_ASSERT_SIZE(CEnum::Flags, 0x01);
-
-    CEnum(CName aName, int8_t aActualSize, Flags aFlags = {});
-
-    CName GetName() const final;                                                                     // 08
-    uint32_t GetSize() const final;                                                                  // 10
-    uint32_t GetAlignment() const final;                                                             // 18
-    ERTTIType GetType() const final;                                                                 // 20
-    CName GetComputedName() const final;                                                             // 30
-    void Construct(ScriptInstance aMemory) const final;                                              // 38
-    void Destruct(ScriptInstance aMemory) const final;                                               // 40
-    const bool IsEqual(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3 = 0) final; // 48
-    void Assign(ScriptInstance aLhs, const ScriptInstance aRhs) const final;                         // 50
-    bool Unserialize(BaseStream* aStream, ScriptInstance aInstance, int64_t a3) const final;         // 60
-    bool ToString(const ScriptInstance aInstance, CString& aOut) const final;                        // 68
-    bool FromString(ScriptInstance aInstance, const CString& aString) const final;                   // 70
-
-    CName name;                       // 10
-    CName computedName;               // 18
-    uint8_t actualSize;               // 20
-    Flags flags;                      // 21
-    DynArray<CName> hashList;         // 28
-    DynArray<int64_t> valueList;      // 38
-    DynArray<CName> aliasList;        // 48
-    DynArray<int64_t> aliasValueList; // 58
-};
-RED4EXT_ASSERT_SIZE(CEnum, 0x68);
-RED4EXT_ASSERT_OFFSET(CEnum, name, 0x10);
-RED4EXT_ASSERT_OFFSET(CEnum, computedName, 0x18);
-RED4EXT_ASSERT_OFFSET(CEnum, actualSize, 0x20);
-RED4EXT_ASSERT_OFFSET(CEnum, flags, 0x21);
-RED4EXT_ASSERT_OFFSET(CEnum, hashList, 0x28);
-RED4EXT_ASSERT_OFFSET(CEnum, valueList, 0x38);
-RED4EXT_ASSERT_OFFSET(CEnum, aliasList, 0x48);
-RED4EXT_ASSERT_OFFSET(CEnum, aliasValueList, 0x58);
-
-struct CBitfield : CBaseRTTIType
-{
-    struct Flags
-    {
-        uint8_t isScripted : 1; // 00
-        uint8_t b2 : 7;
-    };
-    RED4EXT_ASSERT_SIZE(CBitfield::Flags, 0x01);
-
-    CBitfield(CName aName, int8_t aActualSize, Flags aFlags = {});
-
-    CName GetName() const final;                                                                     // 08
-    uint32_t GetSize() const final;                                                                  // 10
-    uint32_t GetAlignment() const final;                                                             // 18
-    ERTTIType GetType() const final;                                                                 // 20
-    CName GetComputedName() const final;                                                             // 30
-    void Construct(ScriptInstance aMemory) const final;                                              // 38
-    void Destruct(ScriptInstance aMemory) const final;                                               // 40
-    const bool IsEqual(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3 = 0) final; // 48
-    void Assign(ScriptInstance aLhs, const ScriptInstance aRhs) const final;                         // 50
-    bool Unserialize(BaseStream* aStream, ScriptInstance aInstance, int64_t a3) const final;         // 60
-    bool ToString(const ScriptInstance aInstance, CString& aOut) const final;                        // 68
-    bool FromString(ScriptInstance aInstance, const CString& aString) const final;                   // 70
-
-    CName name;         // 10
-    CName computedName; // 18
-    uint8_t actualSize; // 20
-    Flags flags;        // 21
-    uint64_t validBits; // 28
-    CName bitNames[64]; // 30
-};
-RED4EXT_ASSERT_SIZE(CBitfield, 0x230);
-RED4EXT_ASSERT_OFFSET(CBitfield, name, 0x10);
-RED4EXT_ASSERT_OFFSET(CBitfield, computedName, 0x18);
-RED4EXT_ASSERT_OFFSET(CBitfield, actualSize, 0x20);
-RED4EXT_ASSERT_OFFSET(CBitfield, flags, 0x21);
-RED4EXT_ASSERT_OFFSET(CBitfield, validBits, 0x28);
-RED4EXT_ASSERT_OFFSET(CBitfield, bitNames, 0x30);
 
 #pragma region Fundamentals
 using CFundamentalRTTITypeBool = CBaseRTTIType;
