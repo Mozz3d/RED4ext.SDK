@@ -1,17 +1,19 @@
 #pragma once
 
-#include <type_traits>
-
+#include <RED4ext/RTTI/ClassType.hpp>
 #include <RED4ext/CName.hpp>
 #include <RED4ext/Detail/AddressHashes.hpp>
 #include <RED4ext/InstanceType.hpp>
-#include <RED4ext/RTTITypes.hpp>
 #include <RED4ext/Relocation.hpp>
 #include <RED4ext/Scripting/IScriptable.hpp>
 
+#include <type_traits>
+
 namespace RED4ext
 {
-struct CProperty
+namespace rtti
+{
+struct Property
 {
     struct Flags
     {
@@ -48,16 +50,16 @@ struct CProperty
     };
     RED4EXT_ASSERT_SIZE(Flags, 0x8);
 
-    CProperty(CBaseRTTIType* aType, const char* aName, CClass* aParent = nullptr, uint32_t aValueOffset = 0,
+    Property(IType* aType, const char* aName, ClassType* aParent = nullptr, uint32_t aValueOffset = 0,
               const char* aGroup = nullptr, Flags aFlags = {});
 
-    static CProperty* Create(CBaseRTTIType* aType, const char* aName, CClass* aParent = nullptr,
+    static Property* Create(IType* aType, const char* aName, ClassType* aParent = nullptr,
                              uint32_t aValueOffset = 0, const char* aGroup = nullptr, Flags aFlags = {});
 
-    CBaseRTTIType* type;  // 00
+    IType* type;          // 00
     CName name;           // 08
     CName group;          // 10
-    CClass* parent;       // 18
+    ClassType* parent;    // 18
     uint32_t valueOffset; // 20
     Flags flags;          // 28
 
@@ -68,10 +70,10 @@ struct CProperty
 
         if constexpr (std::is_pointer_v<T>)
         {
-            return type->IsEqual(currValue, aValue, a3);
+            return type->Compare(currValue, aValue, a3);
         }
 
-        return type->IsEqual(currValue, &aValue, a3);
+        return type->Compare(currValue, &aValue, a3);
     }
 
     template<typename T>
@@ -81,11 +83,11 @@ struct CProperty
 
         if constexpr (std::is_pointer_v<T>)
         {
-            type->Assign(prevValue, aValue);
+            type->Copy(prevValue, aValue);
         }
         else
         {
-            type->Assign(prevValue, &aValue);
+            type->Copy(prevValue, &aValue);
         }
     }
 
@@ -112,17 +114,22 @@ struct CProperty
             holder = scriptable->GetValueHolder();
         }
 
-        return reinterpret_cast<T*>(reinterpret_cast<uintptr_t>(holder) + valueOffset);
+        return std::bit_cast<T*>(std::bit_cast<uintptr_t>(holder) + valueOffset);
     }
 };
-RED4EXT_ASSERT_SIZE(CProperty, 0x30);
-RED4EXT_ASSERT_OFFSET(CProperty, type, 0x0);
-RED4EXT_ASSERT_OFFSET(CProperty, name, 0x8);
-RED4EXT_ASSERT_OFFSET(CProperty, parent, 0x18);
-RED4EXT_ASSERT_OFFSET(CProperty, valueOffset, 0x20);
-RED4EXT_ASSERT_OFFSET(CProperty, flags, 0x28);
+RED4EXT_ASSERT_SIZE(Property, 0x30);
+RED4EXT_ASSERT_OFFSET(Property, type, 0x0);
+RED4EXT_ASSERT_OFFSET(Property, name, 0x8);
+RED4EXT_ASSERT_OFFSET(Property, parent, 0x18);
+RED4EXT_ASSERT_OFFSET(Property, valueOffset, 0x20);
+RED4EXT_ASSERT_OFFSET(Property, flags, 0x28);
+
+} // namespace rtti
+struct [[deprecated("Use 'rtti::Property' instead.")]] CProperty : rtti::Property
+{
+};
 } // namespace RED4ext
 
 #ifdef RED4EXT_HEADER_ONLY
-#include <RED4ext/Scripting/CProperty-inl.hpp>
+#include <RED4ext/RTTI/Property-inl.hpp>
 #endif
