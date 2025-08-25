@@ -7,33 +7,33 @@
 #include <RED4ext/Detail/AddressHashes.hpp>
 #include <RED4ext/Relocation.hpp>
 
-RED4EXT_INLINE RED4ext::CRTTISystem* RED4ext::CRTTISystem::Get()
+RED4EXT_INLINE RED4ext::rtti::TypeSystemImpl* RED4ext::rtti::TypeSystemImpl::Get()
 {
-    static UniversalRelocFunc<CRTTISystem* (*)()> func(Detail::AddressHashes::CRTTISystem_Get);
+    static UniversalRelocFunc<TypeSystemImpl* (*)()> func(Detail::AddressHashes::CRTTISystem_Get);
     return func();
 }
 
-RED4EXT_INLINE void RED4ext::CRTTISystem::RegisterType(CBaseRTTIType* aType)
+RED4EXT_INLINE void RED4ext::rtti::TypeSystemImpl::RegisterType(IType* aType)
 {
     RegisterType(aType, RTTIRegistrator::GetNextId());
 }
 
-RED4EXT_INLINE void RED4ext::RTTIRegistrator::Add(CallbackFunc aRegFunc, CallbackFunc aPostRegFunc, bool aUnused)
+RED4EXT_INLINE void RED4ext::rtti::RTTIRegistrator::Add(CallbackFunc aRegFunc, CallbackFunc aPostRegFunc, bool aUnused)
 {
     RED4EXT_UNUSED_PARAMETER(aUnused);
 
     if (aRegFunc)
     {
-        CRTTISystem::Get()->AddRegisterCallback(aRegFunc);
+        TypeSystemImpl::Get()->AddRegisterCallback(aRegFunc);
     }
 
     if (aPostRegFunc)
     {
-        CRTTISystem::Get()->AddPostRegisterCallback(aPostRegFunc);
+        TypeSystemImpl::Get()->AddPostRegisterCallback(aPostRegFunc);
     }
 }
 
-RED4EXT_INLINE const uint32_t RED4ext::RTTIRegistrator::GetNextId()
+RED4EXT_INLINE const uint32_t RED4ext::rtti::RTTIRegistrator::GetNextId()
 {
     static UniversalRelocPtr<volatile uint32_t> ptr(Detail::AddressHashes::CRTTIRegistrator_RTTIAsyncId);
     return InterlockedIncrement(ptr.GetAddr());
