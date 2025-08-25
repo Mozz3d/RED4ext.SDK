@@ -51,26 +51,26 @@ RED4EXT_INLINE bool RED4ext::rtti::Function::AddParam(CName aType, const char* a
     return true;
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::Function::Execute(CStack* aStack)
+RED4EXT_INLINE bool RED4ext::rtti::Function::Execute(CStack* aStack) const
 {
     if (!flags.isNative)
     {
-        using executeScriptedFn_t = bool (*)(Function*, CStack*, void*);
+        using executeScriptedFn_t = bool (*)(const Function*, CStack*, void*);
         static UniversalRelocFunc<executeScriptedFn_t> executeScriptedFn(
             Detail::AddressHashes::CBaseFunction_ExecuteScripted);
         return executeScriptedFn(this, aStack, nullptr);
     }
 
-    using executeNativeFn_t = bool (*)(Function*, CStack*);
+    using executeNativeFn_t = bool (*)(const Function*, CStack*);
     static UniversalRelocFunc<executeNativeFn_t> executeNativeFn(Detail::AddressHashes::CBaseFunction_ExecuteNative);
     return executeNativeFn(this, aStack);
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::Function::Execute_(CStack* aStack)
+RED4EXT_INLINE bool RED4ext::rtti::Function::Execute_(CStack* aStack) const
 {
     if (!flags.isNative)
     {
-        using func_t = bool (*)(Function*, CStack*);
+        using func_t = bool (*)(const Function*, CStack*);
         static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CBaseFunction_ExecuteScripted);
         return func(this, aStack);
     }
@@ -88,7 +88,7 @@ RED4EXT_INLINE RED4ext::rtti::Function::Handler_t RED4ext::rtti::Function::GetHa
     return handlers[aIndex];
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::Function::ExecuteNative(CStack* aStack, CStackFrame& aFrame)
+RED4EXT_INLINE bool RED4ext::rtti::Function::ExecuteNative(CStack* aStack, CStackFrame& aFrame) const
 {
     auto context = aStack->GetContext();
     auto resultType = aStack->GetResultType();

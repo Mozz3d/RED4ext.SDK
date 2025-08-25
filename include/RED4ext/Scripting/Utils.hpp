@@ -9,22 +9,25 @@
 
 namespace RED4ext
 {
-struct CBaseFunction;
-struct CClass;
+namespace rtti
+{
+struct Function;
+struct ClassType;
+}
 
-bool ExecuteFunction(ScriptInstance aInstance, CBaseFunction* aFunc, void* aOut);
-bool ExecuteFunction(ScriptInstance aInstance, CBaseFunction* aFunc, void* aOut, StackArgs_t& aArgs);
+bool ExecuteFunction(ScriptInstance aInstance, rtti::Function* aFunc, void* aOut);
+bool ExecuteFunction(ScriptInstance aInstance, rtti::Function* aFunc, void* aOut, StackArgs_t& aArgs);
 
-bool ExecuteFunction(CClass* aContext, CBaseFunction* aFunc, void* aOut, StackArgs_t& aArgs);
-bool ExecuteFunction(CClass* aContext, CName aFunc, void* aOut, StackArgs_t& aArgs);
+bool ExecuteFunction(rtti::ClassType* aContext, rtti::Function* aFunc, void* aOut, StackArgs_t& aArgs);
+bool ExecuteFunction(rtti::ClassType* aContext, CName aFunc, void* aOut, StackArgs_t& aArgs);
 bool ExecuteFunction(CName aContext, CName aFunc, void* aOut, StackArgs_t& aArgs);
 
-bool ExecuteGlobalFunction(CClass* aContext, CName aFunc, void* aOut, StackArgs_t& aArgs);
+bool ExecuteGlobalFunction(rtti::ClassType* aContext, CName aFunc, void* aOut, StackArgs_t& aArgs);
 bool ExecuteGlobalFunction(CName aContext, CName aFunc, void* aOut, StackArgs_t& aArgs);
 bool ExecuteGlobalFunction(CName aFunc, void* aOut, StackArgs_t& aArgs);
 
 template<typename... Args>
-bool ExecuteFunction(CClass* aContext, CBaseFunction* aFunc, void* aOut, Args&&... aArgs)
+bool ExecuteFunction(rtti::ClassType* aContext, rtti::Function* aFunc, void* aOut, Args&&... aArgs)
 {
     StackArgs_t args;
     ((args.emplace_back(nullptr, &aArgs)), ...);
@@ -33,7 +36,7 @@ bool ExecuteFunction(CClass* aContext, CBaseFunction* aFunc, void* aOut, Args&&.
 }
 
 template<typename... Args>
-bool ExecuteFunction(CClass* aContext, CName aFunc, void* aOut, Args&&... aArgs)
+bool ExecuteFunction(rtti::ClassType* aContext, CName aFunc, void* aOut, Args&&... aArgs)
 {
     StackArgs_t args;
     ((args.emplace_back(nullptr, &aArgs)), ...);
@@ -51,7 +54,7 @@ bool ExecuteFunction(CName aContext, CName aFunc, void* aOut, Args&&... aArgs)
 }
 
 template<typename... Args>
-bool ExecuteGlobalFunction(CClass* aContext, CName aFunc, void* aOut, Args&&... aArgs)
+bool ExecuteGlobalFunction(rtti::ClassType* aContext, CName aFunc, void* aOut, Args&&... aArgs)
 {
     StackArgs_t args;
     ((args.emplace_back(nullptr, &aArgs)), ...);
@@ -75,7 +78,7 @@ bool ExecuteGlobalFunction(CName aFunc, void* aOut, Args&&... aArgs)
 }
 
 template<typename T>
-inline void GetParameter(RED4ext::CStackFrame* aFrame, T* aInstance)
+inline void GetParameter(CStackFrame* aFrame, T* aInstance)
 {
     if constexpr (std::is_pointer_v<T>)
     {
@@ -87,7 +90,7 @@ inline void GetParameter(RED4ext::CStackFrame* aFrame, T* aInstance)
     aFrame->currentParam++;
 
     const auto opcode = *(aFrame->code++);
-    RED4ext::OpcodeHandlers::Run(opcode, (IScriptable*)aFrame->context, aFrame, aInstance, nullptr);
+    OpcodeHandlers::Run(opcode, (IScriptable*)aFrame->context, aFrame, aInstance, nullptr);
 
     if constexpr (std::is_pointer_v<T>)
     {

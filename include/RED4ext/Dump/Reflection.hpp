@@ -8,24 +8,24 @@
 
 #include <RED4ext/CName.hpp>
 
-namespace RED4ext
+namespace RED4ext::rtti
 {
-struct CClass;
-struct CBaseRTTIType;
-struct CProperty;
-struct CEnum;
-struct CBitfield;
-} // namespace RED4ext
+struct ClassType;
+struct IType;
+struct Property;
+struct EnumType;
+struct BitFieldType;
+} // namespace RED4ext::rtti
 
 namespace RED4ext::GameReflection
 {
 using GetPrefix = std::function<std::string(const std::string&)>;
 using NameSantizer = std::function<std::string(const std::string&, bool&)>;
-using NameTransformer = std::function<std::string(const RED4ext::CBaseRTTIType*)>;
-using DescriptorPath = std::function<std::string(const RED4ext::CBaseRTTIType*)>;
-using NamespaceTransformer = std::function<std::vector<std::string>(const RED4ext::CBaseRTTIType*)>;
-using TypeChecker = std::function<bool(const RED4ext::CBaseRTTIType*)>;
-using FixedTypeMapping = std::unordered_map<RED4ext::CName, std::string, RED4ext::CName>;
+using NameTransformer = std::function<std::string(const rtti::IType*)>;
+using DescriptorPath = std::function<std::string(const rtti::IType*)>;
+using NamespaceTransformer = std::function<std::vector<std::string>(const rtti::IType*)>;
+using TypeChecker = std::function<bool(const rtti::IType*)>;
+using FixedTypeMapping = std::unordered_map<CName, std::string, CName>;
 
 static constexpr const char* INVALID_CHARACTERS = R"(-|'|\(|\)|\]|\[|/|\.|\s|:)";
 // small conflicts with windows macro
@@ -69,7 +69,7 @@ struct ClassFileDescriptor
 
 struct EnumFileDescriptor
 {
-    EnumFileDescriptor(const RED4ext::CEnum* pEnum, NameTransformer aNameTransformer,
+    EnumFileDescriptor(const rtti::EnumType* pEnum, NameTransformer aNameTransformer,
                        NameTransformer aQualifiedTransformer, DescriptorPath aTypeToPath);
 
     std::string name;
@@ -86,7 +86,7 @@ struct EnumFileDescriptor
 
 struct BitfieldFileDescriptor
 {
-    BitfieldFileDescriptor(const RED4ext::CBitfield* pEnum, NameTransformer aNameTransformer,
+    BitfieldFileDescriptor(const rtti::BitFieldType* pEnum, NameTransformer aNameTransformer,
                            NameTransformer aQualifiedTransformer, DescriptorPath aTypeToPath);
 
     std::string name;
@@ -102,13 +102,13 @@ struct BitfieldFileDescriptor
 
 struct ClassDependencyBuilder
 {
-    const RED4ext::CClass* pType;
-    std::unordered_set<const RED4ext::CBaseRTTIType*> mDirect;
-    std::unordered_set<const RED4ext::CBaseRTTIType*> mIndirect;
-    std::map<uint64_t, const RED4ext::CProperty*> mPropertyMap;
-    std::map<uint64_t, const RED4ext::CProperty*> mHolderPropertyMap;
+    const rtti::ClassType* pType;
+    std::unordered_set<const rtti::IType*> mDirect;
+    std::unordered_set<const rtti::IType*> mIndirect;
+    std::map<uint64_t, const rtti::Property*> mPropertyMap;
+    std::map<uint64_t, const rtti::Property*> mHolderPropertyMap;
 
-    void Accumulate(const RED4ext::CBaseRTTIType* type);
+    void Accumulate(const rtti::IType* type);
 
     void ToFileDescriptor(ClassFileDescriptor& aFd, NameTransformer aNameTransformer,
                           NameTransformer aQualifiedTransformer, DescriptorPath aTypeToPath,
@@ -116,7 +116,7 @@ struct ClassDependencyBuilder
                           const FixedTypeMapping& aFixedMapping, bool aVerbose);
 };
 
-std::string TypeToString(const RED4ext::CBaseRTTIType* aType, NameTransformer aNameTransformer, bool aVerbose = false);
+std::string TypeToString(const rtti::IType* aType, NameTransformer aNameTransformer, bool aVerbose = false);
 
 void EmitBulkGenerated(std::filesystem::path aOutPath, const std::set<std::string>& aIncludes);
 

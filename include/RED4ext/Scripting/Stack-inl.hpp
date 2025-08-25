@@ -16,8 +16,8 @@ RED4EXT_INLINE RED4ext::CBaseStack::CBaseStack(IScriptable* aContext) noexcept
     , context18(aContext)
     , context20(aContext)
 {
-    auto rtti = CRTTISystem::Get();
-    unk28 = rtti->GetClass("IScriptable");
+    auto rtti = RTTISystem::Get();
+    unk28 = rtti->FindClass("IScriptable");
 }
 
 RED4EXT_INLINE RED4ext::IScriptable* RED4ext::CBaseStack::GetContext() const
@@ -31,7 +31,7 @@ RED4EXT_INLINE RED4ext::IScriptable* RED4ext::CBaseStack::GetContext() const
     return nullptr;
 }
 
-RED4EXT_INLINE RED4ext::CStackType::CStackType(CBaseRTTIType* aType, ScriptInstance aValue)
+RED4EXT_INLINE RED4ext::CStackType::CStackType(rtti::IType* aType, ScriptInstance aValue)
     : type(aType)
     , value{aValue}
 {

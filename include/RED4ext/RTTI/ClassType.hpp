@@ -97,6 +97,7 @@ struct ClassType : IType
 
     void ClearScriptedData();
 
+#pragma region deprecated
     [[deprecated("Use 'FindProperty()' instead.")]]
     inline void GetProperty(CName aName) const
     {
@@ -126,6 +127,7 @@ struct ClassType : IType
     {
         return CreateObject(aZeroMemory);
     }
+#pragma endregion
 
     ClassType* parent;                              // 10
     CName name;                                     // 18

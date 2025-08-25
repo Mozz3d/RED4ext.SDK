@@ -35,10 +35,10 @@ struct IFunction
 
     virtual Memory::IAllocator* GetAllocator() = 0; // 00
     virtual ~IFunction() = 0;                       // 08
-    virtual ClassType* GetParent() = 0;                // 10
-    virtual uint32_t GetRegIndex() = 0;             // 18
-    virtual Invokable* GetInvokable() = 0; // 20 - Returns an object, vf obj+0x20 is the function to invoke only used
-                                           // if static func
+    virtual ClassType* GetParent() const = 0;       // 10
+    virtual uint32_t GetRegIndex() const = 0;       // 18
+    virtual Invokable* GetInvokable() const = 0;    // 20 - Returns an object, vf obj+0x20 is the function to invoke only used
+                                                    // if static func
 };
 RED4EXT_ASSERT_SIZE(IFunction, 0x8);
 
@@ -67,7 +67,7 @@ struct Function : IFunction
     };
     RED4EXT_ASSERT_SIZE(Function::Flags, 0x4);
 
-    bool Execute(CStack* aStack);
+    bool Execute(CStack* aStack) const;
 
     /*
      * The following two functions might not be needed when scripts are released, I am not sure if they set the type of
@@ -93,9 +93,9 @@ struct Function : IFunction
 private:
     using Handler_t = void (*)(ScriptInstance, RED4ext::CStackFrame&, void*, IType*);
 
-    bool Execute_(CStack* aStack);
+    bool Execute_(CStack* aStack) const;
     static Handler_t GetHandler(uint32_t aIndex);
-    bool ExecuteNative(CStack* aStack, CStackFrame& aFrame);
+    bool ExecuteNative(CStack* aStack, CStackFrame& aFrame) const;
 };
 RED4EXT_ASSERT_SIZE(Function, 0xB0);
 RED4EXT_ASSERT_OFFSET(Function, fullName, 0x08);
@@ -201,8 +201,8 @@ struct [[deprecated("Use 'rtti::NativeMemberFunction' instead.")]] CClassFunctio
 struct [[deprecated("Use 'rtti::NativeMemberFunction' instead.")]] CClassStaticFunction : rtti::NativeMemberFunction
 {
     [[deprecated("Use 'rtti::NativeMemberFunction::CreateStatic' instead.")]]
-    static NativeMemberFunction* Create(ClassType* aParent, const char* aFullName, const char* aShortName,
-                                        ScriptingGlobalFunction_t aFunc, Flags aFlags = {})
+    static NativeMemberFunction* Create(rtti::ClassType* aParent, const char* aFullName, const char* aShortName,
+                                        rtti::ScriptingGlobalFunction_t aFunc, Flags aFlags = {})
     {
         return CreateStatic(aParent, aFullName, aShortName, aFunc, aFlags);
     }
