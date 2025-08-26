@@ -11,13 +11,13 @@
 #include <RED4ext/RTTI/Function.hpp>
 #include <RED4ext/Scripting/IScriptable.hpp>
 
-RED4EXT_INLINE bool RED4ext::ExecuteFunction(ScriptInstance aInstance, rtti::Function* aFunc, void* aOut)
+RED4EXT_INLINE bool RED4ext::ExecuteFunction(ScriptInstance aInstance, const rtti::Function* aFunc, void* aOut)
 {
     StackArgs_t args;
     return ExecuteFunction(aInstance, aFunc, aOut, args);
 }
 
-RED4EXT_INLINE bool RED4ext::ExecuteFunction(ScriptInstance aInstance, rtti::Function* aFunc, void* aOut,
+RED4EXT_INLINE bool RED4ext::ExecuteFunction(ScriptInstance aInstance, const rtti::Function* aFunc, void* aOut,
                                              StackArgs_t& aArgs)
 {
     CStackType result;
@@ -49,7 +49,7 @@ RED4EXT_INLINE bool RED4ext::ExecuteFunction(ScriptInstance aInstance, rtti::Fun
     return aFunc->Execute(&stack);
 }
 
-RED4EXT_INLINE bool RED4ext::ExecuteFunction(rtti::ClassType* aContext, rtti::Function* aFunc, void* aOut, StackArgs_t& aArgs)
+RED4EXT_INLINE bool RED4ext::ExecuteFunction(rtti::ClassType* aContext, const rtti::Function* aFunc, void* aOut, StackArgs_t& aArgs)
 {
     auto engine = CGameEngine::Get();
     auto gameInstance = engine->framework->gameInstance;

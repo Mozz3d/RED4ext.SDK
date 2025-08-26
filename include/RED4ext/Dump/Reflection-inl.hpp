@@ -862,7 +862,7 @@ RED4EXT_INLINE void ClassDependencyBuilder::ToFileDescriptor(ClassFileDescriptor
         aFd.fwdDeclarations.emplace(aQualifiedTransformer(ind));
     }
 
-    std::array<std::tuple<std::map<uint64_t, const RED4ext::CProperty*>*,
+    std::array<std::tuple<std::map<uint64_t, const rtti::Property*>*,
                           std::vector<ClassFileDescriptor::PropertyDescriptor>*>,
                2>
         props = {make_tuple(&mPropertyMap, &aFd.properties), make_tuple(&mHolderPropertyMap, &aFd.holderProperties)};

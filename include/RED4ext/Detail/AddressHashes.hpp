@@ -121,6 +121,172 @@ constexpr std::uint32_t DynArray_Realloc = 0x7AA013D2;
 constexpr std::uint32_t Allocator_CreateResource = 2508272872UL;
 #pragma endregion
 
+#pragma region FundamentalTypes
+constexpr std::uint32_t FundamentalTypeBool_GetName = 3880784410UL;
+constexpr std::uint32_t FundamentalTypeInt8_GetName = 3817869809UL;
+constexpr std::uint32_t FundamentalTypeUint8_GetName = 4184740454UL;
+constexpr std::uint32_t FundamentalTypeInt16_GetName = 4068872736UL;
+constexpr std::uint32_t FundamentalTypeUint16_GetName = 149426837UL;
+constexpr std::uint32_t FundamentalTypeInt32_GetName = 4065858078UL;
+constexpr std::uint32_t FundamentalTypeUint32_GetName = 146412179UL;
+constexpr std::uint32_t FundamentalTypeFloat_GetName = 4227469956UL;
+constexpr std::uint32_t FundamentalTypeDouble_GetName = 280433385UL;
+constexpr std::uint32_t FundamentalTypeInt64_GetName = 4073919011UL;
+constexpr std::uint32_t FundamentalTypeUint64_GetName = 154473112UL;
+
+constexpr std::uint32_t FundamentalTypeBool_GetRefName = 569905975UL;
+constexpr std::uint32_t FundamentalTypeInt8_GetRefName = 506991374UL;
+constexpr std::uint32_t FundamentalTypeUint8_GetRefName = 892539779UL;
+constexpr std::uint32_t FundamentalTypeInt16_GetRefName = 776672061UL;
+constexpr std::uint32_t FundamentalTypeUint16_GetRefName = 1169888178UL;
+constexpr std::uint32_t FundamentalTypeInt32_GetRefName = 773657403UL;
+constexpr std::uint32_t FundamentalTypeUint32_GetRefName = 1166873520UL;
+constexpr std::uint32_t FundamentalTypeFloat_GetRefName = 935269281UL;
+constexpr std::uint32_t FundamentalTypeDouble_GetRefName = 1300894726UL;
+constexpr std::uint32_t FundamentalTypeInt64_GetRefName = 781718336UL;
+constexpr std::uint32_t FundamentalTypeUint64_GetRefName = 1174934453UL;
+
+constexpr std::uint32_t FundamentalTypeBool_ToString = 325981961UL;
+constexpr std::uint32_t FundamentalTypeInt8_ToString = 4186248864UL;
+constexpr std::uint32_t FundamentalTypeUint8_ToString = 4188608161UL;
+constexpr std::uint32_t FundamentalTypeInt16_ToString = 4190967458UL;
+constexpr std::uint32_t FundamentalTypeUint16_ToString = 4193326755UL;
+constexpr std::uint32_t FundamentalTypeInt32_ToString = 4195686052UL;
+constexpr std::uint32_t FundamentalTypeUint32_ToString = 4198045349UL;
+constexpr std::uint32_t FundamentalTypeFloat_ToString = 4207482537UL;
+constexpr std::uint32_t FundamentalTypeDouble_ToString = 4209841834UL;
+constexpr std::uint32_t FundamentalTypeInt64_ToString = 316544773UL;
+constexpr std::uint32_t FundamentalTypeUint64_ToString = 318904070UL;
+
+constexpr std::uint32_t FundamentalTypeBool_FromString = 1782847661UL;
+constexpr std::uint32_t FundamentalTypeInt8_FromString = 1328552004UL;
+constexpr std::uint32_t FundamentalTypeUint8_FromString = 1330976837UL;
+constexpr std::uint32_t FundamentalTypeInt16_FromString = 1333401670UL;
+constexpr std::uint32_t FundamentalTypeUint16_FromString = 1335826503UL;
+constexpr std::uint32_t FundamentalTypeInt32_FromString = 1338251336UL;
+constexpr std::uint32_t FundamentalTypeUint32_FromString = 1340676169UL;
+constexpr std::uint32_t FundamentalTypeFloat_FromString = 1350375501UL;
+constexpr std::uint32_t FundamentalTypeDouble_FromString = 1352800334UL;
+constexpr std::uint32_t FundamentalTypeInt64_FromString = 1773148329UL;
+constexpr std::uint32_t FundamentalTypeUint64_FromString = 1775573162UL;
+
+constexpr std::uint32_t FundamentalTypeBool_ReadValue = 932461408UL;
+constexpr std::uint32_t FundamentalTypeInt8_ReadValue = 4100471543UL;
+constexpr std::uint32_t FundamentalTypeUint8_ReadValue = 4109384440UL;
+constexpr std::uint32_t FundamentalTypeInt16_ReadValue = 4118297337UL;
+constexpr std::uint32_t FundamentalTypeUint16_ReadValue = 4127210234UL;
+constexpr std::uint32_t FundamentalTypeInt32_ReadValue = 4136123131UL;
+constexpr std::uint32_t FundamentalTypeUint32_ReadValue = 4145036028UL;
+constexpr std::uint32_t FundamentalTypeFloat_ReadValue = 4180687616UL;
+constexpr std::uint32_t FundamentalTypeDouble_ReadValue = 4189600513UL;
+constexpr std::uint32_t FundamentalTypeInt64_ReadValue = 896809820UL;
+constexpr std::uint32_t FundamentalTypeUint64_ReadValue = 905722717UL;
+
+constexpr std::uint32_t FundamentalTypeBool_WriteValue = 3962774748UL;
+constexpr std::uint32_t FundamentalTypeInt8_WriteValue = 3247187059UL;
+constexpr std::uint32_t FundamentalTypeUint8_WriteValue = 3252102260UL;
+constexpr std::uint32_t FundamentalTypeInt16_WriteValue = 3257017461UL;
+constexpr std::uint32_t FundamentalTypeUint16_WriteValue = 3261932662UL;
+constexpr std::uint32_t FundamentalTypeInt32_WriteValue = 3266847863UL;
+constexpr std::uint32_t FundamentalTypeUint32_WriteValue = 3271763064UL;
+constexpr std::uint32_t FundamentalTypeFloat_WriteValue = 3291423868UL;
+constexpr std::uint32_t FundamentalTypeDouble_WriteValue = 3296339069UL;
+constexpr std::uint32_t FundamentalTypeInt64_WriteValue = 3943113944UL;
+constexpr std::uint32_t FundamentalTypeUint64_WriteValue = 3948029145UL;
+
+template<typename T>
+struct FundamentalType;
+
+template<> struct FundamentalType<bool> {
+    static constexpr std::uint32_t GetName = FundamentalTypeBool_GetName;
+    static constexpr std::uint32_t GetRefName = FundamentalTypeBool_GetRefName;
+    static constexpr std::uint32_t ToString = FundamentalTypeBool_ToString;
+    static constexpr std::uint32_t FromString = FundamentalTypeBool_FromString;
+    static constexpr std::uint32_t ReadValue = FundamentalTypeBool_ReadValue;
+    static constexpr std::uint32_t WriteValue = FundamentalTypeBool_WriteValue;
+};
+template<> struct FundamentalType<std::int8_t> {
+    static constexpr std::uint32_t GetName = FundamentalTypeInt8_GetName;
+    static constexpr std::uint32_t GetRefName = FundamentalTypeInt8_GetRefName;
+    static constexpr std::uint32_t ToString = FundamentalTypeInt8_ToString;
+    static constexpr std::uint32_t FromString = FundamentalTypeInt8_FromString;
+    static constexpr std::uint32_t ReadValue = FundamentalTypeInt8_ReadValue;
+    static constexpr std::uint32_t WriteValue = FundamentalTypeInt8_WriteValue;
+};
+template<> struct FundamentalType<std::uint8_t> {
+    static constexpr std::uint32_t GetName = FundamentalTypeUint8_GetName;
+    static constexpr std::uint32_t GetRefName = FundamentalTypeUint8_GetRefName;
+    static constexpr std::uint32_t ToString = FundamentalTypeUint8_ToString;
+    static constexpr std::uint32_t FromString = FundamentalTypeUint8_FromString;
+    static constexpr std::uint32_t ReadValue = FundamentalTypeUint8_ReadValue;
+    static constexpr std::uint32_t WriteValue = FundamentalTypeUint8_WriteValue;
+};
+template<> struct FundamentalType<std::int16_t> {
+    static constexpr std::uint32_t GetName = FundamentalTypeInt16_GetName;
+    static constexpr std::uint32_t GetRefName = FundamentalTypeInt16_GetRefName;
+    static constexpr std::uint32_t ToString = FundamentalTypeInt16_ToString;
+    static constexpr std::uint32_t FromString = FundamentalTypeInt16_FromString;
+    static constexpr std::uint32_t ReadValue = FundamentalTypeInt16_ReadValue;
+    static constexpr std::uint32_t WriteValue = FundamentalTypeInt16_WriteValue;
+};
+template<> struct FundamentalType<std::uint16_t> {
+    static constexpr std::uint32_t GetName = FundamentalTypeUint16_GetName;
+    static constexpr std::uint32_t GetRefName = FundamentalTypeUint16_GetRefName;
+    static constexpr std::uint32_t ToString = FundamentalTypeUint16_ToString;
+    static constexpr std::uint32_t FromString = FundamentalTypeUint16_FromString;
+    static constexpr std::uint32_t ReadValue = FundamentalTypeUint16_ReadValue;
+    static constexpr std::uint32_t WriteValue = FundamentalTypeUint16_WriteValue;
+};
+template<> struct FundamentalType<std::int32_t> {
+    static constexpr std::uint32_t GetName = FundamentalTypeInt32_GetName;
+    static constexpr std::uint32_t GetRefName = FundamentalTypeInt32_GetRefName;
+    static constexpr std::uint32_t ToString = FundamentalTypeInt32_ToString;
+    static constexpr std::uint32_t FromString = FundamentalTypeInt32_FromString;
+    static constexpr std::uint32_t ReadValue = FundamentalTypeInt32_ReadValue;
+    static constexpr std::uint32_t WriteValue = FundamentalTypeInt32_WriteValue;
+};
+template<> struct FundamentalType<std::uint32_t> {
+    static constexpr std::uint32_t GetName = FundamentalTypeUint32_GetName;
+    static constexpr std::uint32_t GetRefName = FundamentalTypeUint32_GetRefName;
+    static constexpr std::uint32_t ToString = FundamentalTypeUint32_ToString;
+    static constexpr std::uint32_t FromString = FundamentalTypeUint32_FromString;
+    static constexpr std::uint32_t ReadValue = FundamentalTypeUint32_ReadValue;
+    static constexpr std::uint32_t WriteValue = FundamentalTypeUint32_WriteValue;
+};
+template<> struct FundamentalType<float> {
+    static constexpr std::uint32_t GetName = FundamentalTypeFloat_GetName;
+    static constexpr std::uint32_t GetRefName = FundamentalTypeFloat_GetRefName;
+    static constexpr std::uint32_t ToString = FundamentalTypeFloat_ToString;
+    static constexpr std::uint32_t FromString = FundamentalTypeFloat_FromString;
+    static constexpr std::uint32_t ReadValue = FundamentalTypeFloat_ReadValue;
+    static constexpr std::uint32_t WriteValue = FundamentalTypeFloat_WriteValue;
+};
+template<> struct FundamentalType<double> {
+    static constexpr std::uint32_t GetName = FundamentalTypeDouble_GetName;
+    static constexpr std::uint32_t GetRefName = FundamentalTypeDouble_GetRefName;
+    static constexpr std::uint32_t ToString = FundamentalTypeFloat_ToString;
+    static constexpr std::uint32_t FromString = FundamentalTypeDouble_FromString;
+    static constexpr std::uint32_t ReadValue = FundamentalTypeDouble_ReadValue;
+    static constexpr std::uint32_t WriteValue = FundamentalTypeDouble_WriteValue;
+};
+template<> struct FundamentalType<std::int64_t> {
+    static constexpr std::uint32_t GetName = FundamentalTypeInt64_GetName;
+    static constexpr std::uint32_t GetRefName = FundamentalTypeInt64_GetRefName;
+    static constexpr std::uint32_t ToString = FundamentalTypeInt64_ToString;
+    static constexpr std::uint32_t FromString = FundamentalTypeInt64_FromString;
+    static constexpr std::uint32_t ReadValue = FundamentalTypeInt64_ReadValue;
+    static constexpr std::uint32_t WriteValue = FundamentalTypeInt64_WriteValue;
+};
+template<> struct FundamentalType<std::uint64_t> {
+    static constexpr std::uint32_t GetName = FundamentalTypeUint64_GetName;
+    static constexpr std::uint32_t GetRefName = FundamentalTypeUint64_GetRefName;
+    static constexpr std::uint32_t ToString = FundamentalTypeUint64_ToString;
+    static constexpr std::uint32_t FromString = FundamentalTypeUint64_FromString;
+    static constexpr std::uint32_t ReadValue = FundamentalTypeUint64_ReadValue;
+    static constexpr std::uint32_t WriteValue = FundamentalTypeUint64_WriteValue;
+};
+#pragma endregion
+
 #pragma region Handle
 constexpr std::uint32_t Handle_ctor = 0xBA0C115D;
 constexpr std::uint32_t Handle_DecWeakRef = 0x333B1404;

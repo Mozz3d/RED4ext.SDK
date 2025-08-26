@@ -15,10 +15,10 @@ struct Function;
 struct ClassType;
 }
 
-bool ExecuteFunction(ScriptInstance aInstance, rtti::Function* aFunc, void* aOut);
-bool ExecuteFunction(ScriptInstance aInstance, rtti::Function* aFunc, void* aOut, StackArgs_t& aArgs);
+bool ExecuteFunction(ScriptInstance aInstance, const rtti::Function* aFunc, void* aOut);
+bool ExecuteFunction(ScriptInstance aInstance, const rtti::Function* aFunc, void* aOut, StackArgs_t& aArgs);
 
-bool ExecuteFunction(rtti::ClassType* aContext, rtti::Function* aFunc, void* aOut, StackArgs_t& aArgs);
+bool ExecuteFunction(rtti::ClassType* aContext, const rtti::Function* aFunc, void* aOut, StackArgs_t& aArgs);
 bool ExecuteFunction(rtti::ClassType* aContext, CName aFunc, void* aOut, StackArgs_t& aArgs);
 bool ExecuteFunction(CName aContext, CName aFunc, void* aOut, StackArgs_t& aArgs);
 
@@ -27,7 +27,7 @@ bool ExecuteGlobalFunction(CName aContext, CName aFunc, void* aOut, StackArgs_t&
 bool ExecuteGlobalFunction(CName aFunc, void* aOut, StackArgs_t& aArgs);
 
 template<typename... Args>
-bool ExecuteFunction(rtti::ClassType* aContext, rtti::Function* aFunc, void* aOut, Args&&... aArgs)
+bool ExecuteFunction(rtti::ClassType* aContext, const rtti::Function* aFunc, void* aOut, Args&&... aArgs)
 {
     StackArgs_t args;
     ((args.emplace_back(nullptr, &aArgs)), ...);

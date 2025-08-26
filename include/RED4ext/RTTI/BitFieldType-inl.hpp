@@ -103,11 +103,11 @@ RED4EXT_INLINE void RED4ext::rtti::BitFieldType::Copy(ScriptInstance aDest, cons
     }
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::BitFieldType::Unserialize(BaseStream* aStream, ScriptInstance aInstance, int64_t a3) const
+RED4EXT_INLINE bool RED4ext::rtti::BitFieldType::Serialize(BaseStream* aStream, ScriptInstance aInstance, ISerializable* aDataOwner) const
 {
-    using func_t = bool (*)(const BitFieldType*, BaseStream*, ScriptInstance, int64_t);
+    using func_t = bool (*)(const BitFieldType*, BaseStream*, ScriptInstance, ISerializable*);
     static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CBitfield_Unserialize);
-    return func(this, aStream, aInstance, a3);
+    return func(this, aStream, aInstance, aDataOwner);
 }
 
 RED4EXT_INLINE bool RED4ext::rtti::BitFieldType::ToString(const ScriptInstance aInstance, CString& aOut) const

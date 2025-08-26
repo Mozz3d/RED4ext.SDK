@@ -53,27 +53,27 @@ struct ClassType : IType
 
     ClassType(CName aName, uint32_t aSize, Flags aFlags);
 
-    virtual CName GetName() const final;                                                                   // 08
-    virtual uint32_t GetSize() const final;                                                                // 10
-    virtual uint32_t GetAlignment() const final;                                                           // 18
-    virtual ERTTIType GetType() const final;                                                               // 20
-    virtual CName GetRefName() const final;                                                                // 30
-    virtual void Construct(ScriptInstance aMemory) const final;                                            // 38
-    virtual void Destruct(ScriptInstance aMemory) const final;                                             // 40
-    virtual bool Unserialize(BaseStream* aStream, ScriptInstance aInstance, int64_t a3) const final;       // 60
-    virtual bool ToString(const ScriptInstance aInstance, CString& aOut) const final;                      // 68
-    virtual bool SerializeToText(int64_t a1, ScriptInstance aInstance) final;                              // 80
-    virtual bool SerializeFromText(int64_t a1, ScriptInstance aInstance) final;                            // 88
-    virtual bool ReadValue(int64_t a1, ScriptInstance aInstance, CString& a3, int64_t a4) final;           // 90
-    virtual bool WriteValue(int64_t a1, ScriptInstance aInstance, CString& a3, int64_t a4, bool a5) final; // 98
-    virtual bool IsPropertyReadOnly(int64_t a1, CString& a2, bool a3) final;                               // A0
-    virtual void RebuildParentHierarchy(int64_t a1, int64_t a2) final;                                     // B0
-    virtual void sub_C0();                                                                                 // C0
-    virtual uint32_t GetMaxAlignment() const;                                                              // C8
-    virtual bool sub_D0() const;                                                                           // D0
-    virtual void OnConstruct(ScriptInstance aMemory) const = 0;                                            // D8
-    virtual void OnDestruct(ScriptInstance aMemory) const = 0;                                             // E0
-    virtual void* AllocMemory() const = 0;                                                                 // E8
+    virtual CName GetName() const final;                                                                              // 08
+    virtual uint32_t GetSize() const final;                                                                           // 10
+    virtual uint32_t GetAlignment() const final;                                                                      // 18
+    virtual ERTTIType GetType() const final;                                                                          // 20
+    virtual CName GetRefName() const final;                                                                           // 30
+    virtual void Construct(ScriptInstance aMemory) const final;                                                       // 38
+    virtual void Destruct(ScriptInstance aMemory) const final;                                                        // 40
+    virtual bool Serialize(BaseStream* aStream, ScriptInstance aInstanceData, ISerializable* aDataOwner) const final; // 60
+    virtual bool ToString(const ScriptInstance aInstance, CString& aOut) const final;                                 // 68
+    virtual bool SerializeToText(int64_t a1, ScriptInstance aInstance) final;                                         // 80
+    virtual bool SerializeFromText(int64_t a1, ScriptInstance aInstance) final;                                       // 88
+    virtual bool ReadValue(int64_t a1, ScriptInstance aInstance, CString& a3, int64_t a4) final;                      // 90
+    virtual bool WriteValue(int64_t a1, ScriptInstance aInstance, CString& a3, int64_t a4, bool a5) final;            // 98
+    virtual bool IsPropertyReadOnly(int64_t a1, CString& a2, bool a3) final;                                          // A0
+    virtual void RebuildParentHierarchy(int64_t a1, int64_t a2) final;                                                // B0
+    virtual void sub_C0();                                                                                            // C0
+    virtual uint32_t GetMaxAlignment() const;                                                                         // C8
+    virtual bool sub_D0() const;                                                                                      // D0
+    virtual void OnConstruct(ScriptInstance aMemory) const = 0;                                                       // D8
+    virtual void OnDestruct(ScriptInstance aMemory) const = 0;                                                        // E0
+    virtual void* AllocMemory() const = 0;                                                                            // E8
 
     ScriptInstance CreateObject(bool aZeroMemory = false) const;
     bool IsA(const IType* aType) const;

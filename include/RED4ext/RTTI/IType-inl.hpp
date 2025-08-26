@@ -139,19 +139,20 @@ RED4EXT_INLINE bool RED4ext::rtti::IType::SerializeFromText(int64_t a1, ScriptIn
     return func(this, a1, aInstance);
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::IType::ReadValue(int64_t a1, ScriptInstance aInstance, CString& a3, int64_t a4)
+RED4EXT_INLINE bool RED4ext::rtti::IType::ReadValue(int64_t aContext, const ScriptInstance aInstance,
+                                                    const CString& aPath, int64_t aOutValue) const
 {
-    using func_t = bool (*)(IType*, int64_t, ScriptInstance, CString&, int64_t);
+    using func_t = bool (*)(const IType*, int64_t, ScriptInstance, const CString&, int64_t);
     static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CBaseRTTIType_sub_90);
-    return func(this, a1, aInstance, a3, a4);
+    return func(this, aContext, aInstance, aPath, aOutValue);
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::IType::WriteValue(int64_t a1, ScriptInstance aInstance, CString& a3, int64_t a4,
-                                                   bool a5)
+RED4EXT_INLINE bool RED4ext::rtti::IType::WriteValue(int64_t aContext, ScriptInstance aInstance, const CString& aPath,
+                                                     const int64_t aOutValue, bool a5) const
 {
-    using func_t = bool (*)(IType*, int64_t, ScriptInstance, CString&, int64_t, bool);
+    using func_t = bool (*)(const IType*, int64_t, ScriptInstance, const CString&, int64_t, bool);
     static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CBaseRTTIType_sub_98);
-    return func(this, a1, aInstance, a3, a4, a5);
+    return func(this, aContext, aInstance, aPath, aOutValue, a5);
 }
 
 RED4EXT_INLINE bool RED4ext::rtti::IType::IsPropertyReadOnly(int64_t a1, CString& a2, bool a3)
@@ -166,10 +167,10 @@ RED4EXT_INLINE bool RED4ext::rtti::IType::IsTriviallyMovable()
     return false;
 }
 
-RED4EXT_INLINE void RED4ext::rtti::IType::RebuildParentHierarchy(int64_t a1, int64_t a2)
+RED4EXT_INLINE void RED4ext::rtti::IType::RebuildParentHierarchy(ScriptInstance aInstance, ISerializable* aParent)
 {
-    RED4EXT_UNUSED_PARAMETER(a1);
-    RED4EXT_UNUSED_PARAMETER(a2);
+    RED4EXT_UNUSED_PARAMETER(aInstance);
+    RED4EXT_UNUSED_PARAMETER(aParent);
 }
 
 RED4EXT_INLINE RED4ext::Memory::IAllocator* RED4ext::rtti::IType::GetAllocator() const

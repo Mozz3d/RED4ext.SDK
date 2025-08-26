@@ -105,11 +105,11 @@ RED4EXT_INLINE void RED4ext::rtti::EnumType::Copy(ScriptInstance aDest, const Sc
     }
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::EnumType::Unserialize(BaseStream* aStream, ScriptInstance aInstance, int64_t a3) const
+RED4EXT_INLINE bool RED4ext::rtti::EnumType::Serialize(BaseStream* aStream, ScriptInstance aInstance, ISerializable* aDataOwner) const
 {
-    using func_t = bool (*)(const EnumType*, BaseStream*, ScriptInstance, int64_t);
+    using func_t = bool (*)(const EnumType*, BaseStream*, ScriptInstance, ISerializable*);
     static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CEnum_Unserialize);
-    return func(this, aStream, aInstance, a3);
+    return func(this, aStream, aInstance, aDataOwner);
 }
 
 RED4EXT_INLINE bool RED4ext::rtti::EnumType::ToString(const ScriptInstance aInstance, CString& aOut) const

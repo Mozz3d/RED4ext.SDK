@@ -6,6 +6,7 @@
 #include <RED4ext/RTTI/NativeClass.hpp>
 #include <RED4ext/RTTI/EnumType.hpp>
 #include <RED4ext/RTTI/BitFieldType.hpp>
+#include <RED4ext/RTTI/FundamentalType.hpp>
 
 #include <type_traits>
 
@@ -13,20 +14,6 @@ namespace RED4ext
 {
 struct BaseStream;
 struct Variant;
-
-#pragma region Fundamentals
-using CFundamentalRTTITypeBool = CBaseRTTIType;
-using CFundamentalRTTITypeInt8 = CBaseRTTIType;
-using CFundamentalRTTITypeUint8 = CBaseRTTIType;
-using CFundamentalRTTITypeInt16 = CBaseRTTIType;
-using CFundamentalRTTITypeUint16 = CBaseRTTIType;
-using CFundamentalRTTITypeInt32 = CBaseRTTIType;
-using CFundamentalRTTITypeUint32 = CBaseRTTIType;
-using CFundamentalRTTITypeInt64 = CBaseRTTIType;
-using CFundamentalRTTITypeUint64 = CBaseRTTIType;
-using CFundamentalRTTITypeFloat = CBaseRTTIType;
-using CFundamentalRTTITypeDouble = CBaseRTTIType;
-#pragma endregion
 
 #pragma region Simples
 using CSimpleRTTITypeCName = CBaseRTTIType;

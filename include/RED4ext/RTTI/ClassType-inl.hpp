@@ -75,12 +75,11 @@ RED4EXT_INLINE void RED4ext::rtti::ClassType::Destruct(ScriptInstance aMemory) c
     OnDestruct(aMemory);
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::ClassType::Unserialize(BaseStream* aStream, ScriptInstance aInstance,
-                                                          int64_t a3) const
+RED4EXT_INLINE bool RED4ext::rtti::ClassType::Serialize(BaseStream* aStream, ScriptInstance aInstance, ISerializable* aDataOwner) const
 {
-    using func_t = bool (*)(const ClassType*, BaseStream*, ScriptInstance, int64_t);
+    using func_t = bool (*)(const ClassType*, BaseStream*, ScriptInstance, ISerializable*);
     static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CClass_Unserialize);
-    return func(this, aStream, aInstance, a3);
+    return func(this, aStream, aInstance, aDataOwner);
 }
 
 RED4EXT_INLINE bool RED4ext::rtti::ClassType::ToString(const ScriptInstance aInstance, CString& aOut) const
