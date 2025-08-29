@@ -192,6 +192,11 @@ RED4EXT_INLINE uint32_t RED4ext::rtti::ArrayType::GetAlignment() const
     return __alignof(DynArray<void*>);
 }
 
+RED4EXT_INLINE RED4ext::ERTTIType RED4ext::rtti::ArrayType::GetType() const
+{
+    return ERTTIType::Array;
+}
+
 RED4EXT_INLINE void RED4ext::rtti::ArrayType::Construct(ScriptData* aMemory) const
 {
     std::construct_at<red::DynArrayAccessor>(static_cast<red::DynArrayAccessor*>(aMemory));

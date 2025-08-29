@@ -7,6 +7,7 @@
 #include <RED4ext/RTTI/EnumType.hpp>
 #include <RED4ext/RTTI/BitFieldType.hpp>
 #include <RED4ext/RTTI/FundamentalType.hpp>
+#include <RED4ext/RTTI/ArrayType.hpp>
 
 #include <type_traits>
 
@@ -33,66 +34,6 @@ using CSimpleRTTITypeGamedataLocKeyWrapper = CBaseRTTIType;
 using CSimpleRTTITypeMessageResourcePath = CBaseRTTIType;
 using CSimpleRTTITypeNodeRef = CBaseRTTIType;
 using CSimpleRTTITypeRuntimeEntityRef = CBaseRTTIType;
-#pragma endregion
-
-#pragma region Arrays
-struct CRTTIBaseArrayType : CBaseRTTIType
-{
-    virtual CBaseRTTIType* GetInnerType() const = 0;                                        // C0
-    virtual bool sub_C8() = 0;                                                              // C8 ret 1
-    virtual uint32_t GetLength(ScriptInstance aInstance) const = 0;                         // D0
-    virtual int32_t GetMaxLength() const = 0;                                               // D8 ret -1
-    virtual ScriptInstance GetElement(ScriptInstance aInstance, uint32_t aIndex) const = 0; // E0
-    virtual ScriptInstance sub_E8(ScriptInstance aInstance, uint32_t aIndex) const = 0;     // E8 Same as E0
-    virtual int32_t Add(ScriptInstance aInstance, int32_t aCount) const = 0;                // F0
-    virtual bool RemoveAt(ScriptInstance aInstance, int32_t aIndex) const = 0;              // F8
-    // [1, 2, 3]
-    // ArrayRTTI->InsertAt(aIndex: 1);
-    // [1, (free), 2, 3]
-    // InnerRTTI->Assign(ArrayRTTI->GetElement(1), newValue)
-    // [1, newValue, 2, 3]
-    virtual bool InsertAt(ScriptInstance aInstance, int32_t aIndex) const = 0; // 100
-    virtual bool Resize(ScriptInstance aInstance, uint32_t aSize) const = 0;   // 108
-
-    CBaseRTTIType* innerType; // 10
-};
-RED4EXT_ASSERT_SIZE(CRTTIBaseArrayType, 0x18);
-RED4EXT_ASSERT_OFFSET(CRTTIBaseArrayType, innerType, 0x10);
-
-struct CRTTIArrayType : CRTTIBaseArrayType
-{
-    CName name;            // 18
-    CBaseRTTIType* parent; // 20
-    uintptr_t unk28;       // 28
-    uintptr_t unk30;       // 30
-    uintptr_t unk38;       // 38
-};
-RED4EXT_ASSERT_SIZE(CRTTIArrayType, 0x40);
-RED4EXT_ASSERT_OFFSET(CRTTIArrayType, parent, 0x20);
-
-struct CRTTIStaticArrayType : CRTTIBaseArrayType
-{
-    int32_t size;       // 18
-    uint32_t pad1C;     // 1C
-    CName name;         // 20
-    CName computedName; // 28
-};
-RED4EXT_ASSERT_SIZE(CRTTIStaticArrayType, 0x30);
-RED4EXT_ASSERT_OFFSET(CRTTIStaticArrayType, size, 0x18);
-RED4EXT_ASSERT_OFFSET(CRTTIStaticArrayType, name, 0x20);
-RED4EXT_ASSERT_OFFSET(CRTTIStaticArrayType, computedName, 0x28);
-
-struct CRTTINativeArrayType : CRTTIBaseArrayType
-{
-    int32_t size;       // 18
-    uint32_t pad1C;     // 1C
-    CName name;         // 20
-    CName computedName; // 28
-};
-RED4EXT_ASSERT_SIZE(CRTTINativeArrayType, 0x30);
-RED4EXT_ASSERT_OFFSET(CRTTINativeArrayType, size, 0x18);
-RED4EXT_ASSERT_OFFSET(CRTTINativeArrayType, name, 0x20);
-RED4EXT_ASSERT_OFFSET(CRTTINativeArrayType, computedName, 0x28);
 #pragma endregion
 
 struct CRTTIPointerType : CBaseRTTIType

@@ -881,7 +881,7 @@ RED4EXT_INLINE void ClassDependencyBuilder::ToFileDescriptor(ClassFileDescriptor
     }
 }
 
-RED4EXT_INLINE std::string TypeToString(const RED4ext::CBaseRTTIType* aType, NameTransformer aNameTransformer,
+RED4EXT_INLINE std::string TypeToString(const RED4ext::rtti::IType* aType, NameTransformer aNameTransformer,
                                         bool aVerbose)
 {
     // Handle some simple type conversions and fundamentals

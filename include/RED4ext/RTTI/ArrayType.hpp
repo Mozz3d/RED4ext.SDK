@@ -13,8 +13,10 @@ struct IBaseArrayType : IType
     virtual bool ToString(const ScriptData* aInstance, CString& aOutString) const final;
     virtual bool SerializeToText(int64_t aWriter, const ScriptData* aData) const final;
     virtual bool SerializeFromText(int64_t aReader, ScriptData* aData) const final;
-    virtual bool ReadValue(int64_t aContext, const ScriptData* aData, const CString& aPath, int64_t aOutValue) const final;
-    virtual bool WriteValue(int64_t aContext, ScriptData* aData, const CString& aPath, const int64_t aValue, bool a5) const final;
+    virtual bool ReadValue(int64_t aContext, const ScriptData* aData, const CString& aPath,
+                           int64_t aOutValue) const final;
+    virtual bool WriteValue(int64_t aContext, ScriptData* aData, const CString& aPath, const int64_t aValue,
+                            bool a5) const final;
     virtual bool IsPropertyReadOnly(int64_t aContext, const CString& aPath, bool& aOutIsReadyOnly) const final;
     virtual void RebuildParentHierarchy(ScriptData* aData, ISerializable* aParent) const final;
 
@@ -29,11 +31,10 @@ struct IBaseArrayType : IType
     virtual bool ArrayInsertElement(ScriptData* aArray, int32_t aIndex) const = 0;                       // 100
     virtual uint32_t ArrayResize(ScriptData* aArray, uint32_t aSize) const = 0;                          // 108
 
-    // [1, 2, 3]
-    // ArrayRTTI->InsertAt(aIndex: 1);
-    // [1, (free), 2, 3]
-    // InnerRTTI->Assign(ArrayRTTI->GetElement(1), newValue)
-    // [1, newValue, 2, 3]
+    IType* GetInnerType() const
+    {
+        return innerType;
+    }
 
     IType* innerType; // 10
 };
@@ -114,6 +115,17 @@ struct StaticArrayType : IBaseArrayType
     virtual bool ArrayInsertElement(ScriptData* aArray, int32_t aIndex) const final;
     virtual uint32_t ArrayResize(ScriptData* aArray, uint32_t aSize) const final;
 
+    uint32_t GetMaxSize() const
+    {
+        return maxSize;
+    }
+
+    [[deprecated("Use 'GetMaxSize()' or 'ArrayGetArrayMaxSize()' instead.")]]
+    inline uint32_t GetMaxLength() const
+    {
+        return GetMaxSize();
+    }
+
     uint32_t maxSize;    // 18
     CName name;          // 20
     CName scriptRefName; // 28
@@ -147,6 +159,17 @@ struct NativeArrayType : IBaseArrayType
     virtual bool ArrayInsertElement(ScriptData* aArray, int32_t aIndex) const final;
     virtual uint32_t ArrayResize(ScriptData* aArray, uint32_t aSize) const final;
 
+    uint32_t GetMaxSize() const
+    {
+        return size;
+    }
+
+    [[deprecated("Use 'GetMaxSize()' or 'ArrayGetArrayMaxSize()' instead.")]]
+    inline uint32_t GetMaxLength() const
+    {
+        return GetMaxSize();
+    }
+
     uint32_t size;       // 18
     CName name;          // 20
     CName scriptRefName; // 28
@@ -154,6 +177,21 @@ struct NativeArrayType : IBaseArrayType
 RED4EXT_ASSERT_SIZE(NativeArrayType, 0x30);
 
 } // namespace rtti
+struct [[deprecated("Use 'rtti::IBaseArrayType' instead.")]] CRTTIBaseArrayType : rtti::IBaseArrayType
+{
+};
+
+struct [[deprecated("Use 'rtti::ArrayType' instead.")]] CRTTIArrayType : rtti::ArrayType
+{
+};
+
+struct [[deprecated("Use 'rtti::StaticArrayType' instead.")]] CRTTIStaticArrayType : rtti::StaticArrayType
+{
+};
+
+struct [[deprecated("Use 'rtti::NativeArrayType' instead.")]] CRTTINativeArrayType : rtti::NativeArrayType
+{
+};
 } // namespace RED4ext
 
 #ifdef RED4EXT_HEADER_ONLY
