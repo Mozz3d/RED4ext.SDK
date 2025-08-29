@@ -17,18 +17,18 @@ struct BitFieldType : IType
 
     BitFieldType(CName aName, int8_t aActualSize, Flags aFlags = {});
 
-    virtual CName GetName() const final;                                                                              // 08
-    virtual uint32_t GetSize() const final;                                                                           // 10
-    virtual uint32_t GetAlignment() const final;                                                                      // 18
-    virtual ERTTIType GetType() const final;                                                                          // 20
-    virtual CName GetRefName() const final;                                                                           // 30
-    virtual void Construct(ScriptInstance aMemory) const final;                                                       // 38
-    virtual void Destruct(ScriptInstance aMemory) const final;                                                        // 40
-    virtual const bool Compare(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3 = 0) final;          // 48
-    virtual void Copy(ScriptInstance aDest, const ScriptInstance aSrc) const final;                                   // 50
-    virtual bool Serialize(BaseStream* aStream, ScriptInstance aInstanceData, ISerializable* aDataOwner) const final; // 60
-    virtual bool ToString(const ScriptInstance aInstance, CString& aOut) const final;                                 // 68
-    virtual bool FromString(ScriptInstance aInstance, const CString& aString) const final;                            // 70
+    virtual CName GetName() const final;                                                                   // 08
+    virtual uint32_t GetSize() const final;                                                                // 10
+    virtual uint32_t GetAlignment() const final;                                                           // 18
+    virtual ERTTIType GetType() const final;                                                               // 20
+    virtual CName GetRefName() const final;                                                                // 30
+    virtual void Construct(ScriptData* aMemory) const final;                                               // 38
+    virtual void Destruct(ScriptData* aMemory) const final;                                                // 40
+    virtual const bool Compare(const ScriptData* aLhs, const ScriptData* aRhs, uint32_t a3 = 0) final;     // 48
+    virtual void Copy(ScriptData* aDest, const ScriptData* aSrc) const final;                              // 50
+    virtual bool Serialize(BaseStream* aStream, ScriptData* aData, ISerializable* aDataOwner) const final; // 60
+    virtual bool ToString(const ScriptData* aData, CString& aOut) const final;                             // 68
+    virtual bool FromString(ScriptData* aData, const CString& aString) const final;                        // 70
 
     CName name;          // 10
     CName scriptRefName; // 18

@@ -35,29 +35,29 @@ struct IType
     IType();
     virtual ~IType() = default; // 00
 
-    virtual CName GetName() const = 0;                                                                                                 // 08
-    virtual uint32_t GetSize() const = 0;                                                                                              // 10
-    virtual uint32_t GetAlignment() const = 0;                                                                                         // 18
-    virtual ERTTIType GetType() const = 0;                                                                                             // 20
-    virtual CString GetERTTITypeString() const;                                                                                        // 28
-    virtual CName GetRefName() const;                                                                                                  // 30
-    virtual void Construct(ScriptInstance aMemory) const = 0;                                                                          // 38
-    virtual void Destruct(ScriptInstance aMemory) const = 0;                                                                           // 40
-    virtual bool Compare(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3 = 0) const = 0;                             // 48 
-    virtual void Copy(ScriptInstance aDest, const ScriptInstance aSrc) const = 0;                                                      // 50
-    virtual void Move(ScriptInstance aLhs, ScriptInstance aRhs) const;                                                                 // 58
-    virtual bool Serialize(BaseStream* aStream, ScriptInstance aInstanceData, ISerializable* aDataOwner) const = 0;                    // 60
-    virtual bool ToString(const ScriptInstance aInstance, CString& aOutString) const;                                                  // 68
-    virtual bool FromString(ScriptInstance aInstance, const CString& aString) const;                                                   // 70
-    virtual bool sub_78();                                                                                                             // 78
-    virtual bool SerializeToText(int64_t aWriter, ScriptInstance aInstance);                                                           // 80
-    virtual bool SerializeFromText(int64_t aReader, ScriptInstance aInstance);                                                         // 88
-    virtual bool ReadValue(int64_t aContext, const ScriptInstance aInstance, const CString& aPath, int64_t aOutValue) const;           // 90
-    virtual bool WriteValue(int64_t aContext, ScriptInstance aInstance, const CString& aPath, const int64_t aOutValue, bool a5) const; // 98
-    virtual bool IsPropertyReadOnly(int64_t aContext, CString& aPath, bool aOutIsReadyOnly);                                           // A0
-    virtual bool IsTriviallyMovable();                                                                                                 // A8
-    virtual void RebuildParentHierarchy(ScriptInstance aInstance, ISerializable* aParent);                                             // B0
-    virtual Memory::IAllocator* GetAllocator() const;                                                                                  // B8
+    virtual CName GetName() const = 0;                                                                                       // 08
+    virtual uint32_t GetSize() const = 0;                                                                                    // 10
+    virtual uint32_t GetAlignment() const = 0;                                                                               // 18
+    virtual ERTTIType GetType() const = 0;                                                                                   // 20
+    virtual CString GetERTTITypeString() const;                                                                              // 28
+    virtual CName GetRefName() const;                                                                                        // 30
+    virtual void Construct(ScriptData* aMemory) const = 0;                                                                   // 38
+    virtual void Destruct(ScriptData* aMemory) const = 0;                                                                    // 40
+    virtual bool Compare(const ScriptData* aLhs, const ScriptData* aRhs, uint32_t a3 = 0) const = 0;                         // 48 
+    virtual void Copy(ScriptData* aDest, const ScriptData* aSrc) const = 0;                                                  // 50
+    virtual void Move(ScriptData* aDest, ScriptData* aSrc) const;                                                            // 58
+    virtual bool Serialize(BaseStream* aStream, ScriptData* aData, ISerializable* aDataOwner) const = 0;                     // 60
+    virtual bool ToString(const ScriptData* aObject, CString& aOutString) const;                                             // 68
+    virtual bool FromString(ScriptData* aObject, const CString& aString) const;                                              // 70
+    virtual bool sub_78();                                                                                                   // 78
+    virtual bool SerializeToText(int64_t aWriter, const ScriptData* aData) const;                                            // 80
+    virtual bool SerializeFromText(int64_t aReader, ScriptData* aData) const;                                                // 88
+    virtual bool ReadValue(int64_t aContext, const ScriptData* aData, const CString& aPath, int64_t aOutValue) const;        // 90
+    virtual bool WriteValue(int64_t aContext, ScriptData* aData, const CString& aPath, const int64_t aValue, bool a5) const; // 98
+    virtual bool IsPropertyReadOnly(int64_t aContext, const CString& aPath, bool& aOutIsReadyOnly) const;                    // A0
+    virtual bool IsTriviallyMovable();                                                                                       // A8
+    virtual void RebuildParentHierarchy(ScriptData* aObject, ISerializable* aParent) const;                                  // B0
+    virtual Memory::IAllocator* GetAllocator() const;                                                                        // B8
 
 #pragma region deprecated
     [[deprecated("Use 'GetERTTITypeString' instead.")]]
@@ -73,13 +73,13 @@ struct IType
     }
 
     [[deprecated("Use 'Compare' instead.")]]
-    RED4EXT_INLINE bool IsEqual(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3 = 0) const
+    RED4EXT_INLINE bool IsEqual(const ScriptData* aLhs, const ScriptData* aRhs, uint32_t a3 = 0) const
     {
         return Compare(aLhs, aRhs, a3);
     }
 
     [[deprecated("Use 'Copy' instead.")]]
-    RED4EXT_INLINE void Assign(ScriptInstance aDest, const ScriptInstance aSrc) const
+    RED4EXT_INLINE void Assign(ScriptData* aDest, const ScriptData* aSrc) const
     {
         Copy(aDest, aSrc);
     }

@@ -15,15 +15,15 @@ struct IFundamentalType : IType
     virtual uint32_t GetSize() const final { sizeof(T); }
     virtual uint32_t GetAlignment() const final { __alignof(T); }
     virtual CName GetRefName() const final; // actually belongs to derived class but is here for simplicity
-    virtual void Construct(ScriptInstance aMemory) const final { return; }
-    virtual void Destruct(ScriptInstance aMemory) const final { return; }
-    virtual bool Compare(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3 = 0) const final;
-    virtual void Copy(ScriptInstance aDest, const ScriptInstance aSrc) const final;
-    virtual bool Serialize(BaseStream* aStream, ScriptInstance aInstanceData, ISerializable* aDataOwner) const final;
-    virtual bool ToString(const ScriptInstance aInstance, CString& aOutString) const final;
-    virtual bool FromString(ScriptInstance aInstance, const CString& aString) const final;
-    virtual bool ReadValue(int64_t aContext, const ScriptInstance aInstance, const CString& aPath, int64_t aOutValue) const final;
-    virtual bool WriteValue(int64_t aContext, ScriptInstance aInstance, const CString& aPath, const int64_t aOutValue, bool a5) const final;
+    virtual void Construct(ScriptData* aMemory) const final { return; }
+    virtual void Destruct(ScriptData* aMemory) const final { return; }
+    virtual bool Compare(const ScriptData* aLhs, const ScriptData* aRhs, uint32_t a3 = 0) const final;
+    virtual void Copy(ScriptData* aDest, const ScriptData* aSrc) const final;
+    virtual bool Serialize(BaseStream* aStream, ScriptData* aData, ISerializable* aDataOwner) const final;
+    virtual bool ToString(const ScriptData* aObject, CString& aOutString) const final;
+    virtual bool FromString(ScriptData* aObject, const CString& aString) const final;
+    virtual bool ReadValue(int64_t aContext, const ScriptData* aData, const CString& aPath, int64_t aOutValue) const final;
+    virtual bool WriteValue(int64_t aContext, ScriptData* aData, const CString& aPath, const int64_t aOutValue, bool a5) const final;
 };
 
 struct FundamentalTypeBool : IFundamentalType<bool>

@@ -14,7 +14,7 @@ struct IScriptable;
 struct TweakDBID;
 struct ItemID;
 
-union ScriptInstanceUnion
+union ScriptDataUnion
 {
     RED4EXT_DECLARE_TYPE(void, ptr);
     RED4EXT_DECLARE_TYPE(uint8_t, u8);
@@ -35,7 +35,8 @@ union ScriptInstanceUnion
     RED4EXT_DECLARE_TYPE(DynArray<void*>, array);
     RED4EXT_DECLARE_TYPE(DynArray<Handle<IScriptable>>, array_ref);
 };
-RED4EXT_ASSERT_SIZE(ScriptInstanceUnion, 0x8);
+RED4EXT_ASSERT_SIZE(ScriptDataUnion, 0x8);
 
+using ScriptData = void;
 using ScriptInstance = void*;
 } // namespace RED4ext

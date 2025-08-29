@@ -41,17 +41,17 @@ RED4EXT_INLINE RED4ext::CName RED4ext::rtti::EnumType::GetRefName() const
     return scriptRefName;
 }
 
-RED4EXT_INLINE void RED4ext::rtti::EnumType::Construct(ScriptInstance aMemory) const
+RED4EXT_INLINE void RED4ext::rtti::EnumType::Construct(ScriptData* aMemory) const
 {
     RED4EXT_UNUSED_PARAMETER(aMemory);
 }
 
-RED4EXT_INLINE void RED4ext::rtti::EnumType::Destruct(ScriptInstance aMemory) const
+RED4EXT_INLINE void RED4ext::rtti::EnumType::Destruct(ScriptData* aMemory) const
 {
     RED4EXT_UNUSED_PARAMETER(aMemory);
 }
 
-RED4EXT_INLINE const bool RED4ext::rtti::EnumType::Compare(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3)
+RED4EXT_INLINE const bool RED4ext::rtti::EnumType::Compare(const ScriptData* aLhs, const ScriptData* aRhs, uint32_t a3)
 {
     RED4EXT_UNUSED_PARAMETER(a3);
 
@@ -78,7 +78,7 @@ RED4EXT_INLINE const bool RED4ext::rtti::EnumType::Compare(const ScriptInstance 
     return false;
 }
 
-RED4EXT_INLINE void RED4ext::rtti::EnumType::Copy(ScriptInstance aDest, const ScriptInstance aSrc) const
+RED4EXT_INLINE void RED4ext::rtti::EnumType::Copy(ScriptData* aDest, const ScriptData* aSrc) const
 {
     switch (actualSize)
     {
@@ -105,23 +105,23 @@ RED4EXT_INLINE void RED4ext::rtti::EnumType::Copy(ScriptInstance aDest, const Sc
     }
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::EnumType::Serialize(BaseStream* aStream, ScriptInstance aInstance, ISerializable* aDataOwner) const
+RED4EXT_INLINE bool RED4ext::rtti::EnumType::Serialize(BaseStream* aStream, ScriptData* aData, ISerializable* aDataOwner) const
 {
-    using func_t = bool (*)(const EnumType*, BaseStream*, ScriptInstance, ISerializable*);
+    using func_t = bool (*)(const EnumType*, BaseStream*, void*, ISerializable*);
     static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CEnum_Unserialize);
-    return func(this, aStream, aInstance, aDataOwner);
+    return func(this, aStream, aData, aDataOwner);
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::EnumType::ToString(const ScriptInstance aInstance, CString& aOut) const
+RED4EXT_INLINE bool RED4ext::rtti::EnumType::ToString(const ScriptData* aObject, CString& aOut) const
 {
-    using func_t = bool (*)(const EnumType*, const ScriptInstance, CString&);
+    using func_t = bool (*)(const EnumType*, const void*, CString&);
     static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CEnum_ToString);
-    return func(this, aInstance, aOut);
+    return func(this, aObject, aOut);
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::EnumType::FromString(ScriptInstance aInstance, const CString& aString) const
+RED4EXT_INLINE bool RED4ext::rtti::EnumType::FromString(ScriptData* aObject, const CString& aString) const
 {
-    using func_t = bool (*)(const EnumType*, ScriptInstance, const CString&);
+    using func_t = bool (*)(const EnumType*, void*, const CString&);
     static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CEnum_FromString);
-    return func(this, aInstance, aString);
+    return func(this, aObject, aString);
 }

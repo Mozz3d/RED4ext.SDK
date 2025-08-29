@@ -99,22 +99,22 @@ RED4EXT_INLINE RED4ext::CName RED4ext::rtti::IType::GetRefName() const
     return 0ull;
 }
 
-RED4EXT_INLINE void RED4ext::rtti::IType::Move(ScriptInstance aLhs, ScriptInstance aRhs) const
+RED4EXT_INLINE void RED4ext::rtti::IType::Move(ScriptData* aLhs, ScriptData* aRhs) const
 {
     Copy(aLhs, aRhs);
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::IType::ToString(const ScriptInstance aInstance, CString& aOut) const
+RED4EXT_INLINE bool RED4ext::rtti::IType::ToString(const ScriptData* aData, CString& aOut) const
 {
-    RED4EXT_UNUSED_PARAMETER(aInstance);
+    RED4EXT_UNUSED_PARAMETER(aData);
     RED4EXT_UNUSED_PARAMETER(aOut);
 
     return false;
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::IType::FromString(ScriptInstance aInstance, const CString& aString) const
+RED4EXT_INLINE bool RED4ext::rtti::IType::FromString(ScriptData* aData, const CString& aString) const
 {
-    RED4EXT_UNUSED_PARAMETER(aInstance);
+    RED4EXT_UNUSED_PARAMETER(aData);
     RED4EXT_UNUSED_PARAMETER(aString);
 
     return false;
@@ -125,41 +125,42 @@ RED4EXT_INLINE bool RED4ext::rtti::IType::sub_78()
     return true;
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::IType::SerializeToText(int64_t a1, ScriptInstance aInstance)
+RED4EXT_INLINE bool RED4ext::rtti::IType::SerializeToText(int64_t aWriter, const ScriptData* aData) const
 {
-    using func_t = bool (*)(IType*, int64_t, ScriptInstance);
+    using func_t = bool (*)(const IType*, int64_t, const void*);
     static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CBaseRTTIType_sub_80);
-    return func(this, a1, aInstance);
+    return func(this, aWriter, aData);
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::IType::SerializeFromText(int64_t a1, ScriptInstance aInstance)
+RED4EXT_INLINE bool RED4ext::rtti::IType::SerializeFromText(int64_t aReader, ScriptData* aData) const
 {
-    using func_t = bool (*)(IType*, int64_t, ScriptInstance);
+    using func_t = bool (*)(const IType*, int64_t, void*);
     static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CBaseRTTIType_sub_88);
-    return func(this, a1, aInstance);
+    return func(this, aReader, aData);
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::IType::ReadValue(int64_t aContext, const ScriptInstance aInstance,
+RED4EXT_INLINE bool RED4ext::rtti::IType::ReadValue(int64_t aContext, const ScriptData* aData,
                                                     const CString& aPath, int64_t aOutValue) const
 {
-    using func_t = bool (*)(const IType*, int64_t, ScriptInstance, const CString&, int64_t);
+    using func_t = bool (*)(const IType*, int64_t, const void*, const CString&, int64_t);
     static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CBaseRTTIType_sub_90);
-    return func(this, aContext, aInstance, aPath, aOutValue);
+    return func(this, aContext, aData, aPath, aOutValue);
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::IType::WriteValue(int64_t aContext, ScriptInstance aInstance, const CString& aPath,
+RED4EXT_INLINE bool RED4ext::rtti::IType::WriteValue(int64_t aContext, ScriptData* aData, const CString& aPath,
                                                      const int64_t aOutValue, bool a5) const
 {
-    using func_t = bool (*)(const IType*, int64_t, ScriptInstance, const CString&, int64_t, bool);
+    using func_t = bool (*)(const IType*, int64_t, void*, const CString&, int64_t, bool);
     static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CBaseRTTIType_sub_98);
-    return func(this, aContext, aInstance, aPath, aOutValue, a5);
+    return func(this, aContext, aData, aPath, aOutValue, a5);
 }
 
-RED4EXT_INLINE bool RED4ext::rtti::IType::IsPropertyReadOnly(int64_t a1, CString& a2, bool a3)
+RED4EXT_INLINE bool RED4ext::rtti::IType::IsPropertyReadOnly(int64_t aContext, const CString& aPath,
+                                                             bool& aOutIsReadyOnly) const
 {
-    using func_t = bool (*)(IType*, int64_t, CString&, bool);
+    using func_t = bool (*)(const IType*, int64_t, const CString&, bool&);
     static UniversalRelocFunc<func_t> func(Detail::AddressHashes::CBaseRTTIType_sub_A0);
-    return func(this, a1, a2, a3);
+    return func(this, aContext, aPath, aOutIsReadyOnly);
 }
 
 RED4EXT_INLINE bool RED4ext::rtti::IType::IsTriviallyMovable()
@@ -167,9 +168,9 @@ RED4EXT_INLINE bool RED4ext::rtti::IType::IsTriviallyMovable()
     return false;
 }
 
-RED4EXT_INLINE void RED4ext::rtti::IType::RebuildParentHierarchy(ScriptInstance aInstance, ISerializable* aParent)
+RED4EXT_INLINE void RED4ext::rtti::IType::RebuildParentHierarchy(ScriptData* aObject, ISerializable* aParent) const
 {
-    RED4EXT_UNUSED_PARAMETER(aInstance);
+    RED4EXT_UNUSED_PARAMETER(aObject);
     RED4EXT_UNUSED_PARAMETER(aParent);
 }
 

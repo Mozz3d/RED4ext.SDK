@@ -13,22 +13,22 @@ namespace rtti
 template<typename T>
 struct TNativeClass : ClassType
 {
-    virtual bool Compare(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3) const final
+    virtual bool Compare(const ScriptData* aLhs, const ScriptData* aRhs, uint32_t a3) const final
     {
         return DeepCompare(aLhs, aRhs, a3);
     }
 
-    virtual void Copy(ScriptInstance aDest, const ScriptInstance aSrc) const final
+    virtual void Copy(ScriptData* aDest, const ScriptData* aSrc) const final
     {
         *static_cast<T*>(aDest) = *static_cast<T*>(aSrc);
     }
 
-    virtual void OnConstruct(ScriptInstance aMemory) const final
+    virtual void OnConstruct(ScriptData* aMemory) const final
     {
         std::construct_at(static_cast<T*>(aMemory));
     }
 
-    virtual void OnDestruct(ScriptInstance aMemory) const final
+    virtual void OnDestruct(ScriptData* aMemory) const final
     {
         std::destroy_at(static_cast<T*>(aMemory));
     }
@@ -49,21 +49,21 @@ struct TNativeClass : ClassType
 template<typename T>
 struct TNativeClassNoCopy : ClassType
 {
-    virtual bool Compare(const ScriptInstance aLhs, const ScriptInstance aRhs, uint32_t a3) const final
+    virtual bool Compare(const ScriptData* aLhs, const ScriptData* aRhs, uint32_t a3) const final
     {
         return DeepCompare(aLhs, aRhs, a3);
     }
 
-    virtual void Copy(ScriptInstance aDest, const ScriptInstance aSrc) const final
+    virtual void Copy(ScriptData* aDest, const ScriptData* aSrc) const final
     {
     }
 
-    virtual void OnConstruct(ScriptInstance aMemory) const final
+    virtual void OnConstruct(ScriptData* aMemory) const final
     {
         std::construct_at(static_cast<T*>(aMemory));
     }
 
-    virtual void OnDestruct(ScriptInstance aMemory) const final
+    virtual void OnDestruct(ScriptData* aMemory) const final
     {
         std::destroy_at(static_cast<T*>(aMemory));
     }
