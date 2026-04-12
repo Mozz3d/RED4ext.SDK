@@ -1,10 +1,15 @@
 #pragma once
 
+
 #include <RED4ext/CName.hpp>
 #include <RED4ext/CString.hpp>
 #include <RED4ext/IO/BaseStream.hpp>
 #include <RED4ext/InstanceType.hpp>
-#include <RED4ext/rtti/ERTTIType.hpp>
+#include <RED4ext/RTTI/ERTTIType.hpp>
+#include <RED4ext/Detail/AddressHashes.hpp>
+#include <RED4ext/Relocation.hpp>
+#include <RED4ext/Scripting/CProperty.hpp>
+#include <RED4ext/Scripting/Functions.hpp>
 
 namespace RED4ext
 {
@@ -87,5 +92,5 @@ RED4EXT_ASSERT_SIZE(IType, 0x10);
 } // namespace RED4ext
 
 #ifdef RED4EXT_HEADER_ONLY
-#include <RED4ext/rtti/IType-inl.hpp>
+#include <RED4ext/RTTI/IType-inl.hpp>
 #endif
